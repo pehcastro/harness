@@ -8,9 +8,16 @@
 # other plugins on the machine cannot change the result.
 set -u
 
-LABEL="${1:?usage: run.sh <label> [--plugin]}"; shift
+LABEL="${1:?usage: run.sh <label> [--plugin] [--prompts FILE]}"; shift
 PLUGIN=""
-[ "${1:-}" = "--plugin" ] && PLUGIN="--plugin-dir $(cd "$(dirname "$0")/.." && pwd)"
+PROMPTS=prompts.txt
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --plugin) PLUGIN="--plugin-dir $(cd "$(dirname "$0")/.." && pwd)"; shift ;;
+    --prompts) PROMPTS="$2"; shift 2 ;;
+    *) shift ;;
+  esac
+done
 
 EVALS="$(cd "$(dirname "$0")" && pwd)"
 OUT="$EVALS/runs/$LABEL"
@@ -22,9 +29,9 @@ mkdir -p "$OUT" "$WORK"
 FLAGS="--setting-sources project,local --permission-mode acceptEdits"
 FLAGS="$FLAGS --allowedTools Read,Write,Edit,Glob,Grep,Bash --output-format json $PLUGIN"
 
-grep -v '^#' "$EVALS/prompts.txt" | grep '|' | while IFS='|' read -r n prompt; do
+grep -v '^#' "$EVALS/$PROMPTS" | grep '|' | while IFS='|' read -r n prompt; do
   [ -z "$n" ] && continue
-  cont=""; [ "$n" != "01" ] && cont="-c"
+  cont=""; [ "$n" != "01" ] && [ "$n" != "00" ] && cont="-c"
   echo "### turn $n" >&2
   ( cd "$WORK" && claude -p "$prompt" $cont $FLAGS < /dev/null ) \
     > "$OUT/t$n.json" 2> "$OUT/t$n.err"

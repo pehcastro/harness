@@ -212,6 +212,31 @@ next blocker, and what the reader must decide.
 - Correct: No such name. The closest match under this directory is 12 items of
   another name. The oldest is from Saturday.
 
+## Say what you changed
+
+Name the change when the reader cannot see it. A new file, a new dependency, a
+changed signature, a replaced algorithm, or a change to a file the reader did
+not name: write one clause for it.
+
+Rule 5, which stops you repeating work the reader watched, does not apply here.
+The reader did not watch this. The reader asked for one thing and got another.
+
+- Wrong: Tests pass. `/users/A` still 404s, since no such id is seeded.
+- Correct: The lookup now lowercases both sides, so it scans the Map instead of
+  reading one key. `/users/A` still 404s, since no such id is seeded.
+
+## Correct a wrong premise before you act on it
+
+When the reader states a cause that is wrong, say so first. Then say what you
+did about the real cause.
+
+Do not build the fix for the stated cause and let the correction stand as an
+aside. The reader will read the aside as a detail and the work as agreement.
+
+- Wrong: Tests pass. `/users/A` still 404s, since no such id is seeded.
+- Correct: The lookup is not the cause. `/users/A` 404s because no user with
+  that id is seeded. Do you want a user `A`, or a case-insensitive lookup?
+
 # Safety words
 
 Write these words in capitals at the start of the line. Write them before the
