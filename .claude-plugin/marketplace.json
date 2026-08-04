@@ -9,15 +9,15 @@
     {
       "name": "brevity",
       "displayName": "Brevity",
-      "source": "./",
+      "source": "./plugins/brevity",
       "description": "Claude Code says less, and says it straight. Short replies, no jargon, no preamble. Applies ASD-STE100 Simplified Technical English to long replies.",
       "version": "0.1.0",
       "author": {
         "name": "pehcastro",
         "url": "https://github.com/pehcastro"
       },
-      "homepage": "https://github.com/pehcastro/brevity",
-      "repository": "https://github.com/pehcastro/brevity",
+      "homepage": "https://github.com/pehcastro/harness/tree/main/plugins/brevity",
+      "repository": "https://github.com/pehcastro/harness",
       "license": "MIT",
       "category": "output-styles",
       "keywords": [

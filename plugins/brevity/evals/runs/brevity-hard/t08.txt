@@ -1,0 +1,1 @@
+`app.notFound` in src/app.ts returns `{ error: 'Not Found' }` as JSON, matching the user route. Hono's built-in default returned plain text before. I also added a test for it.

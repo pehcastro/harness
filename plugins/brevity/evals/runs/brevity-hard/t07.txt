@@ -1,0 +1,3 @@
+I can't tell you. No benchmark has been run here, and throughput depends on your host, Node version, concurrency, and what sits in front of the app.
+
+What I can say: the handler is an in-memory Map lookup, so it costs nearly nothing. The ceiling will be Hono plus the Node HTTP server, not your code. Run `autocannon` against `src/index.ts` on the target hardware for a real number.

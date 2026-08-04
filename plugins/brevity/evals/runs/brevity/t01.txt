@@ -1,0 +1,1 @@
+Done. `package.json`, `tsconfig.json`, `src/index.ts`, `.gitignore`. Run `npm install`, then `npm run dev`.

@@ -1,0 +1,8 @@
+Working Hono API, installed, tests passing.
+
+- `src/app.ts`: routes `GET /health` and `GET /users/:id` (404 on miss)
+- `src/users.ts`: Map seeded with ids "1", "2", "3"
+- `src/index.ts`: starts the server on PORT or 3000
+- `src/app.test.ts`: 3 tests
+
+Open item: the npm audit vulnerabilities. Nothing else pending.

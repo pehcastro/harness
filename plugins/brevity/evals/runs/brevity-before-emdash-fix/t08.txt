@@ -1,0 +1,10 @@
+Registration order wins. Hono does not prefer the static path over the parameter path.
+
+I checked this against your installed Hono:
+
+- `/users/:id` first → `/users/me` hits the `:id` handler.
+- `/users/me` first → `/users/me` hits the `me` handler, and `/users/7` still hits `:id`.
+
+The reason: a request collects every matching handler, in the order you registered them. The first one that returns a response ends the chain. Specificity plays no part.
+
+So register `/users/me` above `/users/:id`. If you prefer order-independence, drop the second route and check for `me` inside the `:id` handler.

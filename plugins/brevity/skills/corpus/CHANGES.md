@@ -1,8 +1,7 @@
 # Audit changes
 
-The original collection is at the repository root as `reference.md`. It fixed
-the `Bad` column but never checked the `Good` column. Jargon survived into the
-corrected text.
+The collection this was audited from fixed the `Bad` column but never checked
+the `Good` column. Jargon survived into the corrected text.
 
 This file records every `Good` line the audit changed.
 

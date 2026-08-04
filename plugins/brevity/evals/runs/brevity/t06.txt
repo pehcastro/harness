@@ -1,0 +1,1 @@
+`GET /users/:id` already returned `{error:'not found'}`; the test at `src/app.test.ts:26` asserts it. The plain-text 404 came from Hono's default handler for unmatched paths, so I added `app.notFound` in `src/app.ts:14` to return the same JSON. Tests pass.

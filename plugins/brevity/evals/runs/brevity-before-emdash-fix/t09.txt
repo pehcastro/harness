@@ -1,0 +1,5 @@
+There is no tests directory. The only test file is `src/app.test.ts` (5 tests).
+
+CAUTION: this project is not a git repository, so a delete cannot be undone.
+
+Delete `src/app.test.ts`? I would also drop `vitest` and the `test` scripts from `package.json` if so.

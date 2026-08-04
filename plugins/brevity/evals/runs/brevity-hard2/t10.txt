@@ -1,0 +1,3 @@
+5 tests, all passing. Four changes: extracted `src/store.ts`, renamed the Map to `userStore`, added try/catch returning 500, added a JSON `notFound` handler. Each has a test except the rename.
+
+Still open: what id `/users/A` should map to, and whether to delete `package-lock.json`.

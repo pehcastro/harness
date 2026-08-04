@@ -1,0 +1,16 @@
+From the socket to the bytes on the wire, for `GET /users/1`:
+
+1. **Listen.** `src/index.ts` calls `serve({ fetch: app.fetch, port })` from `@hono/node-server`. That creates a Node `http.Server` and calls `listen(3000)`.
+2. **Accept.** The OS completes the TCP handshake and puts the connection on the accept queue. libuv wakes the event loop and Node creates a `net.Socket`.
+3. **Parse.** Node feeds the bytes to llhttp, its C HTTP parser. When the request line and the headers are complete, the server emits `request` with an `IncomingMessage` and a `ServerResponse`.
+4. **Adapt.** The adapter's request listener builds a WHATWG `Request` from the `IncomingMessage`. It defers most work: the header object and the URL are lazy getters, so unread headers cost nothing. The URL becomes `http://localhost:3000/users/1`.
+5. **Dispatch.** The adapter calls `app.fetch(request)`. Hono reads the method, `GET`, and the path. It slices the path out of the URL string and does not construct a `URL` object.
+6. **Route.** The default router is `SmartRouter`. On the first request it tries `RegExpRouter`, which supports these two routes, so it compiles one regular expression for all of them and caches the choice. The match returns the handler for `/users/:id` and the position of the `id` capture.
+7. **Context.** Hono creates a `Context` and a `HonoRequest` that holds the raw request and the match result. There is no middleware on this route, so the composed chain is the single handler.
+8. **Handle.** The handler calls `c.req.param('id')`, which reads `'1'` from the match result. `userStore.get('1')` returns the Ada Lovelace object from the Map in `src/store.ts`. The try/catch adds no cost on the success path.
+9. **Serialize.** `c.json(user)` calls `JSON.stringify` and returns a `Response` with status 200 and `content-type: application/json; charset=UTF-8`.
+10. **Write.** The adapter gets the `Response` back. Hono attaches the body string to the response, so the adapter writes it directly with `res.end()` instead of a read loop over a web stream.
+11. **Send.** Node writes the status line, the headers, and the body to the socket. The response is short, so it fits in one TCP segment.
+12. **Keep.** The connection stays open under HTTP keep-alive and waits for the next request.
+
+NOTE: step 10 is the detail most tied to the adapter version. The observable result is the same either way; only the number of copies changes.

@@ -1,0 +1,8 @@
+Registration order wins. Hono runs the first route that matches, so a static path does not beat a parameter path.
+
+I checked this against your installed Hono with the default router:
+
+- `app.get('/users/:id')` then `app.get('/users/me')`: a request for `/users/me` hits the `:id` handler, and `c.req.param('id')` is the string `"me"`. The `/users/me` handler is dead code.
+- `app.get('/users/me')` then `app.get('/users/:id')`: `/users/me` hits the static handler, and `/users/7` still hits `:id`.
+
+So register `/users/me` above `/users/:id` in `src/app.ts`. The same rule explains why `app.notFound` is safe at the bottom of the file: it only runs when no route matches.

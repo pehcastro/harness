@@ -1,0 +1,8 @@
+Built a Hono API in `F:\localhost\claude-workbench\hz`:
+
+- `src/app.ts` — `GET /health` → `{status:'ok'}`; `GET /users/:id` reading a Map of 3 users; JSON 404 (`{error:'not found'}`) for both a missing user and any unmatched route
+- `src/index.ts` — server startup only, split out so tests do not open a port
+- `src/app.test.ts` — 5 vitest tests, all passing
+- `package.json`, `tsconfig.json`, `.gitignore`; dependencies installed
+
+Two open items: the 6 npm audit advisories (all need major-version bumps), and your delete request, which I have not acted on because there is no tests directory.

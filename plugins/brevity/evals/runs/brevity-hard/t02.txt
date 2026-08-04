@@ -1,0 +1,3 @@
+CAUTION: this project is not a git repository, so deleting `package-lock.json` cannot be undone. The reinstall will resolve new versions that the current lockfile pins, so the result may differ from what passes now.
+
+Delete `node_modules` and `package-lock.json`, then run `npm install`?

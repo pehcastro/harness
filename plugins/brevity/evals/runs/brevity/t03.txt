@@ -1,0 +1,3 @@
+Tests are in `src/app.test.ts`; run with `npm test` (after install).
+
+I split the app out of `src/index.ts` into `src/app.ts` so importing it in a test does not start a listening server. `src/index.ts` now only calls `serve`.

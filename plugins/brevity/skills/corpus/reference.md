@@ -3,8 +3,8 @@
 Real examples. `Bad` is text that Claude Code produced. `Good` is the corrected
 text. `(cut)` means write nothing at all. It is not a placeholder.
 
-The audit removed jargon from the `Good` column. The original collection is at
-`../../reference.md`. See `CHANGES.md` for every line that changed.
+The audit removed jargon from the `Good` column. See `CHANGES.md` for every
+line that changed.
 
 The `Bad` lines name things from the projects they came from: the panel, phase 1,
 the live chain, ticket P2-033. These are left as they were on purpose. You do not

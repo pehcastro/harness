@@ -39,5 +39,4 @@ Read the section that matches the mistake. Do not read the whole file.
 ## Notes
 
 The corpus was audited against the banned word list in the Brevity output
-style. `CHANGES.md` records every line the audit changed and why. The original,
-unaudited collection is at the repository root as `reference.md`.
+style. `CHANGES.md` records every line the audit changed and why.

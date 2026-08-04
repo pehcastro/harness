@@ -1,0 +1,5 @@
+Done. All 3 tests pass.
+
+Files: `src/app.ts` (routes + Map), `src/index.ts` (listener on port 3000), `test/app.test.ts`. Run with `npm run dev`.
+
+NOTE: `npm audit` reports 6 vulnerabilities in the dev dependency tree (vitest/esbuild chain).
