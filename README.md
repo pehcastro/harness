@@ -56,7 +56,8 @@ Full method and per-turn numbers in [`evals/`](evals/).
 | Decorative tables | 10 | 0 | |
 | Banned words | 2 | 0 | |
 
-The style adds about 2400 tokens to the system prompt. The numbers above are
+The style adds about 2900 tokens to the system prompt, plus 88 for the corpus
+skill listing. The numbers above are
 net of that cost.
 
 The context saving compounds. Short replies make a short transcript, and every

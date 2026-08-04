@@ -47,7 +47,9 @@ The context number is the part that compounds. Short replies make a short
 transcript, and every later turn re-reads that transcript. The saving grows with
 session length.
 
-The style itself costs about 2400 tokens in the system prompt, every session.
+The style itself costs about 2900 tokens in the system prompt, every session,
+plus 88 tokens for the corpus skill listing. The corpus body, 5600 tokens, loads
+only when Claude reaches for it.
 The table above is the net figure, with that cost included.
 
 ## Per-turn word count
