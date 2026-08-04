@@ -1,6 +1,11 @@
 # Brevity
 
-A Claude Code output style. It changes how Claude talks to you in the chat.
+A rule set that changes how an AI coding agent talks to you in the chat.
+
+It ships for Claude Code, Cursor, Windsurf, Cline, GitHub Copilot, and anything
+that reads `AGENTS.md`, which includes Codex. The rules are plain Markdown and
+carry no code, so they work in any agent that accepts a system prompt or a rules
+file. The benchmark below was measured on Claude Code.
 
 Ask "can you fix this issue for me?" and you get:
 
@@ -68,31 +73,75 @@ without   Fixed and verified — 5/5 tests pass.
 with      5 tests pass.                                       3 words
 ```
 
-The plugin rarely changes the answer. It changes how much text surrounds it.
+The rules rarely change the answer. They change how much text surrounds it.
 
 ## Install
 
-Not published yet. Test it locally:
-
 ```bash
 git clone https://github.com/pehcastro/brevity
+```
+
+Then pick your agent.
+
+### Claude Code
+
+```bash
 claude --plugin-dir ./brevity
 ```
 
-It applies on its own. You do not pick it in `/config`. Every session with the
-plugin enabled starts with the style on.
-
-To turn it off, disable the plugin:
-
-```
-/plugin disable brevity
-```
+The style applies on its own. You do not pick it in `/config`. Every session with
+the plugin enabled starts with the style on. Turn it off with
+`/plugin disable brevity`.
 
 NOTE: the plugin sets `force-for-plugin`, so while it is enabled it overrides
 the `outputStyle` you set in your own settings. Disable the plugin to get your
 setting back.
 
-### See which style is active
+### Cursor
+
+```bash
+cp brevity/adapters/cursor/brevity.mdc  <your-project>/.cursor/rules/
+```
+
+The file sets `alwaysApply: true`.
+
+### Windsurf
+
+```bash
+cp brevity/adapters/windsurf/brevity.md  <your-project>/.windsurf/rules/
+```
+
+The file sets `trigger: always_on`.
+
+### Cline
+
+```bash
+cp brevity/adapters/cline/brevity.md  <your-project>/.clinerules/
+```
+
+### GitHub Copilot
+
+```bash
+cp brevity/adapters/copilot/copilot-instructions.md  <your-project>/.github/
+```
+
+### Codex, Amp, and anything that reads AGENTS.md
+
+```bash
+cp brevity/adapters/agents/AGENTS.md  <your-project>/
+```
+
+Append it instead if you already have an `AGENTS.md`.
+
+### Any other agent
+
+`rules/core.md` is the rules with no wrapper. Paste it into whatever your agent
+accepts: a system prompt, a custom instruction box, a rules file. It is plain
+Markdown and runs nothing.
+
+### See which output style is active
+
+Claude Code only. Other agents have no equivalent.
 
 A plugin cannot set your status line, so this is opt in. `statusline/with-style.sh`
 reads the active style and adds it to whatever status line you already run.
@@ -143,16 +192,30 @@ this works for any style, not only this one.
 ## What is in here
 
 ```
-output-styles/brevity.md      the style. Loads into the system prompt.
-skills/corpus/reference.md    ~150 worked bad/good examples. Loads on demand.
+rules/core.md                 the rules. The only file you edit.
+build.sh                      generates every format below from rules/core.md.
+
+output-styles/brevity.md      Claude Code
+adapters/agents/AGENTS.md     Codex, Amp, and others
+adapters/cursor/*.mdc         Cursor
+adapters/windsurf/*.md        Windsurf
+adapters/cline/*.md           Cline
+adapters/copilot/*.md         GitHub Copilot
+
+skills/corpus/reference.md    ~150 worked bad/good examples. Claude Code loads
+                              this on demand, not every turn.
 skills/corpus/CHANGES.md      what the audit changed and why.
 reference.md                  the original unaudited collection.
 evals/                        the benchmark harness. Runs are not committed.
 statusline/with-style.sh      optional: show the active style in your status line.
 ```
 
-The style is always in context. The corpus is not: Claude reads it only when a
-reply is about to go wrong.
+Edit `rules/core.md`, run `./build.sh`, and every harness format regenerates.
+Do not edit the generated files; the next build overwrites them.
+
+The rules are always in context. The corpus is not. Claude Code loads it only
+when a reply is about to go wrong. Other agents have no equivalent, so on those
+you get the rules alone.
 
 ## Where the rules came from
 
@@ -179,15 +242,24 @@ be redistributed. For word rulings, see the free standard at
 
 ## Limits
 
+Applies everywhere:
+
+- The rules are an instruction to a language model, not a filter on its output.
+  A model can ignore them. The benchmark measures how often it does not.
+- The corpus loads on demand on Claude Code only. On other agents you get the
+  rules without the worked examples.
+- Code, command output, error text, and quotations are exempt from the rules.
+- A confirmation before an action you cannot reverse is exempt. The rules do not
+  suppress that question.
+
+Claude Code specific:
+
 - The style reaches the main conversation only. Claude Code gives a subagent its
   own system prompt, so the style does not load there. The style handles this by
   telling Claude to paste a short rule block into any subagent prompt whose
   output a person will read, and to rewrite a subagent's result rather than
   paste it. That is an instruction, not a guarantee.
 - The style loads once at session start. Changes need `/clear` or a new session.
-- Code, command output, error text, and quotations are exempt.
-- A confirmation before an action you cannot reverse is exempt. The style will
-  not suppress that question.
 
 ## Licence
 
