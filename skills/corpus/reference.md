@@ -6,6 +6,12 @@ text. `(cut)` means write nothing at all. It is not a placeholder.
 The audit removed jargon from the `Good` column. The original collection is at
 `../../reference.md`. See `CHANGES.md` for every line that changed.
 
+The `Bad` lines name things from the projects they came from: the panel, phase 1,
+the live chain, ticket P2-033. These are left as they were on purpose. You do not
+need to know what they refer to. Read the shape of the sentence, not its subject.
+A `Good` line keeps a specific name only where the name is the point, as in
+`Keep the information`, where dropping the ticket number is the mistake.
+
 Read the section that matches the mistake you are about to make.
 
 ---
