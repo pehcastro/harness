@@ -39,7 +39,7 @@ short answer that makes you ask again is a failure.
 
 One 10-turn Claude Code session, run twice with the same prompts and the same
 model. Build a Hono API, install it, test it, fix it, explain it, summarize it.
-Full method, raw replies and per-turn numbers in [`evals/`](evals/).
+Full method and per-turn numbers in [`evals/`](evals/).
 
 | | without | with | change |
 |---|---|---|---|
@@ -94,7 +94,7 @@ setting back.
 
 ### See which style is active
 
-A plugin cannot set your status line, so this is opt in. `statusline/with-style.js`
+A plugin cannot set your status line, so this is opt in. `statusline/with-style.sh`
 reads the active style and adds it to whatever status line you already run.
 
 If you have no status line yet, add this to `~/.claude/settings.json`:
@@ -103,7 +103,7 @@ If you have no status line yet, add this to `~/.claude/settings.json`:
 {
   "statusLine": {
     "type": "command",
-    "command": "node /path/to/brevity/statusline/with-style.js"
+    "command": "sh /path/to/brevity/statusline/with-style.sh"
   }
 }
 ```
@@ -118,7 +118,7 @@ If you already run one, such as claude-hud, put your current command after `--`:
 {
   "statusLine": {
     "type": "command",
-    "command": "node /path/to/brevity/statusline/with-style.js --prefix --label 'output mode: ' -- 'your existing command here'"
+    "command": "sh /path/to/brevity/statusline/with-style.sh --prefix --label 'output mode: ' -- 'your existing command here'"
   }
 }
 ```
@@ -147,7 +147,8 @@ output-styles/brevity.md      the style. Loads into the system prompt.
 skills/corpus/reference.md    ~150 worked bad/good examples. Loads on demand.
 skills/corpus/CHANGES.md      what the audit changed and why.
 reference.md                  the original unaudited collection.
-evals/                        the benchmark, and every raw reply behind it.
+evals/                        the benchmark harness. Runs are not committed.
+statusline/with-style.sh      optional: show the active style in your status line.
 ```
 
 The style is always in context. The corpus is not: Claude reads it only when a
@@ -191,3 +192,15 @@ be redistributed. For word rulings, see the free standard at
 ## Licence
 
 MIT.
+
+## Dependencies
+
+None. The style is a Markdown file that Claude Code reads. The corpus is
+Markdown. Nothing runs at session start.
+
+The optional status line script is POSIX `sh`, so it needs no node, no python
+and no jq. Claude Code ships as a binary and does not install a runtime, so the
+plugin does not assume one.
+
+`evals/metrics.js` needs node, but only if you want to reproduce the token
+numbers yourself. Nothing a user of the plugin runs depends on it.
