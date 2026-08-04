@@ -1,0 +1,33 @@
+{
+  "name": "nkz",
+  "owner": {
+    "name": "nkz",
+    "url": "https://github.com/pehcastro"
+  },
+  "description": "Plugins by nkz.",
+  "plugins": [
+    {
+      "name": "brevity",
+      "displayName": "Brevity",
+      "source": "./",
+      "description": "Claude Code says less, and says it straight. Short replies, no jargon, no preamble. Applies ASD-STE100 Simplified Technical English to long replies.",
+      "version": "0.1.0",
+      "author": {
+        "name": "nkz",
+        "url": "https://github.com/pehcastro"
+      },
+      "homepage": "https://github.com/pehcastro/brevity",
+      "repository": "https://github.com/pehcastro/brevity",
+      "license": "MIT",
+      "category": "output-styles",
+      "keywords": [
+        "output-style",
+        "brevity",
+        "plain-language",
+        "simplified-technical-english",
+        "ste",
+        "tokens"
+      ]
+    }
+  ]
+}
