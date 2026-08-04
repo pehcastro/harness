@@ -78,15 +78,22 @@ The rules rarely change the answer. They change how much text surrounds it.
 
 ## Install
 
-```bash
-git clone https://github.com/pehcastro/brevity
-```
-
-Then pick your agent.
-
 ### Claude Code
 
+```
+/plugin marketplace add pehcastro/brevity
+/plugin install brevity@pehcastro
+```
+
+Then restart, or run `/reload-plugins`.
+
+The marketplace is `pehcastro` and the plugin is `brevity`, which is why the
+install reads `brevity@pehcastro`.
+
+To try it without installing:
+
 ```bash
+git clone https://github.com/pehcastro/brevity
 claude --plugin-dir ./brevity
 ```
 
@@ -115,6 +122,14 @@ selection. Brevity is one style, always on, with nothing to configure.
 
 If you want a variant, such as the banned words without the Simplified Technical
 English rules, edit `rules/core.md` and run `./build.sh`.
+
+### Other agents
+
+Clone the repository first:
+
+```bash
+git clone https://github.com/pehcastro/brevity
+```
 
 ### Cursor
 
