@@ -94,9 +94,27 @@ The style applies on its own. You do not pick it in `/config`. Every session wit
 the plugin enabled starts with the style on. Turn it off with
 `/plugin disable brevity`.
 
-NOTE: the plugin sets `force-for-plugin`, so while it is enabled it overrides
-the `outputStyle` you set in your own settings. Disable the plugin to get your
-setting back.
+CAUTION: the plugin sets `force-for-plugin`, so while it is enabled it overrides
+the `outputStyle` in your own settings, including Explanatory, Learning, and any
+custom style. This is tested, not assumed. Disable the plugin to get your setting
+back.
+
+### Configuration
+
+There is none, on purpose.
+
+Claude Code plugins can declare `userConfig` and prompt the user for values at
+enable time. Those values reach hook commands, MCP and LSP configs, skills and
+agents. They do not reach an output style: `${user_config.KEY}` stays literal in
+a style file. Tested by substituting a plain word in the same position, which
+worked.
+
+So a setting could be stored but nothing would read it. The only real choice
+would be which style the user selects, and `force-for-plugin` overrides that
+selection. Brevity is one style, always on, with nothing to configure.
+
+If you want a variant, such as the banned words without the Simplified Technical
+English rules, edit `rules/core.md` and run `./build.sh`.
 
 ### Cursor
 
