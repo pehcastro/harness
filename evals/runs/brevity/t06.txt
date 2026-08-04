@@ -1,1 +1,0 @@
-Changed, tests pass. It was already JSON, the message was `'user not found'`.

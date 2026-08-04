@@ -1,1 +1,0 @@
-Working API in `F:\localhost\claude-workbench\humanizer`: `src/app.ts` holds GET /health and GET /users/:id, `src/index.ts` starts the server on port 3000. Installed, 4 tests passing. Not run as a live server yet, and not a git repo.

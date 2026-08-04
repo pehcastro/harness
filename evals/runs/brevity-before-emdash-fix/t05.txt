@@ -1,6 +1,0 @@
-Working API in `F:\localhost\claude-workbench\hz`, installed and passing.
-
-- `src/app.ts` — routes: `GET /health`, `GET /users/:id` (Map with 3 users, 404 on miss)
-- `src/index.ts` — starts the server on port 3000
-- `src/app.test.ts` — 4 vitest tests, all passing
-- Open item: the 6 audit advisories, which need major-version bumps

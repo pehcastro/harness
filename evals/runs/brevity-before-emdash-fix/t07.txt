@@ -1,1 +1,0 @@
-Keep the Map. A throwaway demo does not need a database, and swapping later is a small change since the reads go through one Map.

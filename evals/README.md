@@ -1,7 +1,11 @@
 # Evals
 
-Every claim in the top-level README comes from a run in this directory. The raw
-replies are here. Re-run them yourself with `run.sh`.
+Every number in the top-level README comes from the harness in this directory.
+Run it yourself and you should get the same shape of result.
+
+Raw replies are not committed. They are large, they are specific to one machine
+and one day, and they go stale the moment a model updates. `run.sh` writes them
+to `runs/`, which is ignored by git.
 
 ## Method
 
@@ -126,8 +130,8 @@ exception to the rule against asking, and the model kept the exception.
 
 ## What the evals changed in the plugin
 
-`runs/brevity-before-emdash-fix/` is the first run. It had 6 em dashes, all
-of them separating a label from a description in a list:
+The first run had 6 em dashes, all of them separating a label from a
+description in a list:
 
 ```
 - `src/app.ts` — routes: GET /health, GET /users/:id

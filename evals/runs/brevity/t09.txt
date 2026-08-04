@@ -1,1 +1,0 @@
-There is no tests directory. The only test file is `src/app.test.ts`. Delete that file (and the `test` script plus vitest from package.json)?

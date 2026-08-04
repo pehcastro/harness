@@ -1,3 +1,0 @@
-4 tests pass.
-
-NOTE: `npm audit` reports 6 advisories. Five come from the vitest → vite → esbuild chain (dev-only, one rated critical), and one is `@hono/node-server` path traversal in `serve-static` on Windows, which this app does not use. The fixes are major-version bumps: `vitest` 2 → 4, `@hono/node-server` 1 → 2.

@@ -1,1 +1,0 @@
-Added. IDs are `1`, `2`, `3`; anything else returns 404 with `{error:'user not found'}`.

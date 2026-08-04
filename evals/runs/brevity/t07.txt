@@ -1,1 +1,0 @@
-Keep the Map. A throwaway demo gets nothing from a database except setup work.
