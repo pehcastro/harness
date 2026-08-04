@@ -1,3 +1,8 @@
 .claude
 node_modules/
 **/evals/runs/
+
+# petit
+.petit/
+dist/
+docs-export.html

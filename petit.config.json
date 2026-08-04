@@ -1,0 +1,17 @@
+{
+  "title": "harness",
+  "theme": "claude",
+  "defaultScheme": "system",
+  "schemeSwitcher": true,
+  "maxWidth": "lg",
+  "toc": true,
+  "sidebarPosition": "left",
+  "repository": "https://github.com/pehcastro/harness",
+  "branch": "main",
+  "credits": true,
+  "sidebar": [
+    { "label": "Getting started", "path": "./docs/getting-started" },
+    { "label": "Brevity", "path": "./docs/brevity" },
+    { "label": "Marketplace", "path": "./docs/marketplace" }
+  ]
+}
