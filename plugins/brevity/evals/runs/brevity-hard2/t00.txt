@@ -1,3 +1,0 @@
-Done. All 3 tests pass.
-
-Tests live in `test/app.test.ts` and call `app.request()` directly, so no server starts. I added `tsconfig.json` and `@hono/node-server` (needed for the listener), plus `tsx` for `npm run dev`.

@@ -1,3 +1,0 @@
-Renamed in `src/store.ts` and `src/app.ts`. No comment named the Map, so none changed. The tests never referenced the symbol, only the `/users/:id` URL, which I left alone.
-
-Two questions still open: the reinstall, and which reading of the 500 test.

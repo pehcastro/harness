@@ -1,1 +1,0 @@
-Added `app.notFound()` in `src/app.ts` returning `{ error: 'Not Found' }`, 404, plus a test for it. Unmatched routes already returned 404; the change is the body, previously Hono's plain text `404 Not Found`, now JSON matching the `/users/:id` shape. Tests pass.

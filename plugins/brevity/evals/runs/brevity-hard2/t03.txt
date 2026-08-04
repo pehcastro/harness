@@ -1,5 +1,0 @@
-`users` was already a global mutable singleton: a module-level `Map`, exported and imported directly. The only real change was moving it out of the route file, so I created `src/store.ts` with `User` and `users`, and `src/app.ts` now imports from it and re-exports both so existing imports keep working. Tests pass.
-
-NOTE: shared mutable state makes tests order-dependent once a route writes to the Map. A `reset()` in `store.ts` would cover that.
-
-Still open: the `/users/A` id, and whether to delete `package-lock.json`.

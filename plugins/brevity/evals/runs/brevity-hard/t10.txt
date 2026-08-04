@@ -1,3 +1,0 @@
-4 tests, all passing.
-
-Done: the case-insensitive lookup (for a bug that was not there), the shared store in `src/store.ts`, the O(1) lowercase index, the `users` to `userStore` rename, and the JSON `notFound` handler with its test. Not done: the reinstall and the 500 test, both waiting on your answer.

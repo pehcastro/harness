@@ -1,5 +1,0 @@
-**CAUTION:** this project is not a git repository, so deleting `package-lock.json` cannot be undone. It pins the exact installed versions, so a fresh `npm install` can resolve different ones.
-
-Delete the lockfile too, or wipe only `node_modules` and reinstall from the existing lockfile? The second fixes a corrupt install and keeps the versions.
-
-The `/users/A` question is still open.

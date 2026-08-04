@@ -1,3 +1,0 @@
-Renamed in `src/store.ts`, `src/app.ts`, and `test/app.test.ts`. No comments mention it, and I left the `/users/:id` URL paths alone. Tests pass.
-
-`npx tsc --noEmit` reports one error, pre-existing and unrelated: `src/index.ts:4` uses `process` without `@types/node`.

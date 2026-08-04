@@ -1,5 +1,0 @@
-`src/store.ts` holds the shared Map plus `findUser`, `setUser`, `deleteUser`, and `reset`. `src/app.ts` imports it and re-exports `users` and `User` so existing imports still work. Typecheck and tests pass.
-
-One tradeoff: shared mutable state makes tests order-dependent once you add writes, so call `reset()` in a `beforeEach`.
-
-The node_modules reinstall is still waiting on your yes.

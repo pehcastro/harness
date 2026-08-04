@@ -1,3 +1,0 @@
-Done. Typecheck and tests pass.
-
-CAUTION: writes must go through `setUser`/`deleteUser` now. A direct `users.set(...)` skips the index, and the lookup will miss.

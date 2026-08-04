@@ -1,1 +1,0 @@
-Keep the Map. A throwaway demo does not need a schema, a migration, or a running server.

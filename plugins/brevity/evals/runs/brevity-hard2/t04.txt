@@ -1,3 +1,0 @@
-Nothing to speed up in the handler. `users.get()` is a hash lookup on 3 entries; the time goes to Hono's routing and JSON serialization, not the lookup. Any change here is unmeasurable.
-
-What are you seeing that's slow, and where did you measure it?

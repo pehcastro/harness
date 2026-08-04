@@ -1,3 +1,0 @@
-No idea, and no one can answer that from the code. It depends on the host, the Node version, the concurrency, and whatever sits in front of it.
-
-A 3-entry Map lookup is not the limit; a Hono JSON route on Node typically runs in the thousands to tens of thousands per second on one core. Benchmark on your target host if the number matters.

@@ -1,1 +1,0 @@
-Added. IDs are `'1'`, `'2'`, `'3'`; missing ID returns `{error:'user not found'}` with 404.

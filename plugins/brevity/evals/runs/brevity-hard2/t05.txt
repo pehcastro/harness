@@ -1,5 +1,0 @@
-An unconditional 500 for `/users/1` would contradict the existing test that asserts 200 for that same path, so I read this as error-path coverage: the new test stubs `users.get` to throw, then asserts `GET /users/1` returns 500.
-
-To make it pass I wrapped the handler in try/catch returning `{ error: 'Internal Server Error' }`, 500. Test added in `test/app.test.ts` with an `afterEach` that restores mocks. All 4 pass.
-
-If you actually want `/users/1` to always 500, say so: that means deleting the 200 test.
