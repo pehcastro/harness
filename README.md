@@ -94,20 +94,51 @@ setting back.
 
 ### See which style is active
 
-A plugin cannot set your status line, so this is a paste-in. Add it to
-`~/.claude/settings.json` to see the active style at all times:
+A plugin cannot set your status line, so this is opt in. `statusline/with-style.js`
+reads the active style and adds it to whatever status line you already run.
+
+If you have no status line yet, add this to `~/.claude/settings.json`:
 
 ```json
 {
   "statusLine": {
     "type": "command",
-    "command": "node -e \"let d='';process.stdin.on('data',c=>d+=c).on('end',()=>console.log('style: '+(JSON.parse(d).output_style?.name||'default')))\""
+    "command": "node /path/to/brevity/statusline/with-style.js"
   }
 }
 ```
 
-If you already run a status line, read `output_style.name` from the JSON on
-stdin and add it to what you have.
+```
+style: Brevity
+```
+
+If you already run one, such as claude-hud, put your current command after `--`:
+
+```json
+{
+  "statusLine": {
+    "type": "command",
+    "command": "node /path/to/brevity/statusline/with-style.js --prefix --label 'output mode: ' -- 'your existing command here'"
+  }
+}
+```
+
+```
+output mode: Brevity
+[Opus 5] brevity git:(main) | Context 22% | Usage 4%
+```
+
+The script passes the same JSON through to your command on stdin, so nothing you
+already display is lost.
+
+| Option | Effect |
+|---|---|
+| `--prefix` | Put the style above your status line instead of below |
+| `--label X` | Text before the name. Default `style: ` |
+| `--hide-default` | Print nothing while the style is Default |
+
+Claude Code sends `output_style.name` on stdin to every status line command, so
+this works for any style, not only this one.
 
 ## What is in here
 
