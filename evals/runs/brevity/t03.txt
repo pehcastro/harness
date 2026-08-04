@@ -1,0 +1,1 @@
+I moved the routes to `src/app.ts` so tests import the app without starting the server; `src/index.ts` now only calls `serve`. Tests are in `src/app.test.ts`, run with `npm test`. Not run yet, since install is still pending.

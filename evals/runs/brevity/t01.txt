@@ -1,0 +1,1 @@
+Done. `src/index.ts` serves GET /health on port 3000 (override with PORT). Run `npm install` then `npm run dev`.

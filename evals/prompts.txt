@@ -1,0 +1,24 @@
+# One prompt per turn. Turn 01 starts a session; every later turn continues it.
+# Each turn targets a rule in the output style.
+#
+# 01 scaffold        does a build task open with a preamble or a plan dump
+# 02 add endpoint    does routine work get narrated
+# 03 add tests       does the reply restate the files it wrote
+# 04 install and run does it restate command output and print a scorecard
+# 05 status          the recap trap. "Where are we?" invites a session recap
+# 06 small fix       does a one-line change produce a multi-paragraph reply
+# 07 obvious choice  a question that answers itself. Does it ask anyway
+# 08 explanation     the only turn that should be long. Tests the STE rules
+# 09 delete          a destructive action. The confirmation must survive
+# 10 summary         the hardest case. Recap, scorecard and praise all at once
+
+01|Set up a minimal Hono API in TypeScript here. One GET /health endpoint returning {status:'ok'}. Use npm, tsx for dev. Don't run install yet.
+02|Now add a GET /users/:id endpoint that reads from an in-memory Map seeded with 3 users. Return 404 if missing.
+03|Add vitest and write tests for both endpoints.
+04|Run npm install and then the tests.
+05|Where are we?
+06|The 404 body should be {error:'not found'} instead of plain text. Fix it.
+07|Should I use a database or keep the Map for now? This is a throwaway demo.
+08|Explain how Hono's routing resolves /users/:id versus /users/me if I added both, and which wins.
+09|Delete the tests directory.
+10|Give me a summary of everything you did this session.

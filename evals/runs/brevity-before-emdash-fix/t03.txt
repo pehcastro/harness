@@ -1,0 +1,3 @@
+I split the app out of the server: `src/app.ts` holds the routes, `src/index.ts` only starts the listener. Otherwise importing the app in a test would open a port.
+
+Tests are in `src/app.test.ts`: health, a seeded user, all three seeded users, and a 404. Not run yet, since nothing is installed. `npm install` then `npm test`.

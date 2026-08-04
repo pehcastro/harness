@@ -1,0 +1,1 @@
+Registration order wins, not specificity. I checked both directions in this project: with `/users/:id` first, it catches `/users/me` and you get a 404 for a missing user; with `/users/me` first, the static route wins. So register `/users/me` above `/users/:id`.
