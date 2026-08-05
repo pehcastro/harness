@@ -21,9 +21,9 @@ Makes the agent say less, and say it straight. 84% fewer words on a measured
 10-turn session.
 /brevity/overview
 
-# Install the marketplace
-Add harness to Claude Code and install your first plugin.
-/getting-started/installation
+# Add the marketplace
+Register the catalog in Claude Code, then install what you want.
+/getting-started/add-the-marketplace
 ```
 
 ## What a plugin looks like here
@@ -52,6 +52,6 @@ and any agent reading `AGENTS.md` expect. See
 
 ## Next steps
 
-- [Install the marketplace](/getting-started/installation)
+- [Add the marketplace](/getting-started/add-the-marketplace)
 - [What Brevity does](/brevity/overview)
 - [Add your own plugin](/marketplace/adding-a-plugin)

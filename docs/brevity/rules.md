@@ -1,7 +1,7 @@
 ---
 title: The rules
 description: Every banned word, format rule, and behavior in the Brevity rule set.
-order: 3
+order: 4
 updated: 2026-08-04
 ---
 

@@ -2,6 +2,8 @@
 
 A Claude Code plugin marketplace. Add it once, then install what you want.
 
+**Docs: [harness.nkz.md](https://harness.nkz.md)**
+
 ```
 /plugin marketplace add pehcastro/harness
 ```

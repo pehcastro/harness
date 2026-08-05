@@ -2,6 +2,8 @@
 
 A rule set that changes how an AI coding agent talks to you in the chat.
 
+Full documentation: **[harness.nkz.md/brevity/overview](https://harness.nkz.md/brevity/overview)**
+
 It ships for Claude Code, Cursor, Windsurf, Cline, GitHub Copilot, and anything
 that reads `AGENTS.md`, which includes Codex. The rules are plain Markdown and
 carry no code, so they work in any agent that accepts a system prompt or a rules

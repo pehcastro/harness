@@ -1,17 +1,29 @@
 {
-  "title": "harness",
-  "theme": "claude",
+  "title": "nkz harness",
+  "theme": "deep",
+  "deploy": "cloudflare",
+  "siteurl": "https://harness.nkz.md",
   "defaultScheme": "system",
   "schemeSwitcher": true,
   "maxWidth": "lg",
   "toc": true,
-  "sidebarPosition": "left",
+  "sidebarPosition": "center",
   "repository": "https://github.com/pehcastro/harness",
   "branch": "main",
   "credits": true,
   "sidebar": [
-    { "label": "Getting started", "path": "./docs/getting-started" },
-    { "label": "Brevity", "path": "./docs/brevity" },
-    { "label": "Marketplace", "path": "./docs/marketplace" }
-  ]
+    {
+      "label": "Getting started",
+      "path": "./docs/getting-started"
+    },
+    {
+      "label": "Brevity",
+      "path": "./docs/brevity"
+    },
+    {
+      "label": "Marketplace",
+      "path": "./docs/marketplace"
+    }
+  ],
+  "siteUrl": "https://harness.nkz.md"
 }

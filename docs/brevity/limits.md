@@ -1,7 +1,7 @@
 ---
 title: Limits and configuration
 description: What Brevity cannot do, why it has no settings, and how to show the active style in your status line.
-order: 6
+order: 7
 updated: 2026-08-04
 ---
 
@@ -79,57 +79,6 @@ everything has.
   words, not whether you had to ask a follow-up.
 - The Cursor, Windsurf, Cline, and Copilot files. Generated and format-checked,
   never loaded in those tools.
-
-## Show the active style in your status line
-
-Claude Code sends `output_style.name` on stdin to every status line command, and
-most status lines ignore it. The plugin ships a wrapper that reads the name and
-adds it to whatever you already run.
-
-A plugin can't set your status line, so this is opt in.
-
-```tabs
-# No status line yet
-
-Add this to `~/.claude/settings.json`:
-
-  "statusLine": {
-    "type": "command",
-    "command": "sh /path/to/harness/plugins/brevity/statusline/with-style.sh"
-  }
-
-Output:
-
-  style: Brevity
-
-# You already have one
-
-Put your existing command after the `--` separator:
-
-  "statusLine": {
-    "type": "command",
-    "command": "sh /path/to/harness/plugins/brevity/statusline/with-style.sh --prefix --label 'output mode: ' -- 'your existing command'"
-  }
-
-Output:
-
-  output mode: Brevity
-  [Opus 5] harness git:(main) | Context 22% | Usage 4%
-```
-
-The script passes the same JSON through to your command on stdin, so nothing you
-already display is lost. It drops your command's stderr, because a status line
-that prints errors corrupts the display.
-
-| Option | Effect |
-|---|---|
-| `--prefix` | Put the style above your status line instead of below |
-| `--label X` | Text before the name. Default is `style: ` |
-| `--hide-default` | Print nothing while the style is Default |
-
-The script is POSIX `sh` and parses the name with `sed`. Claude Code ships as a
-binary and its installer doesn't put node on your `PATH`, so the plugin assumes
-no runtime.
 
 ## Next steps
 

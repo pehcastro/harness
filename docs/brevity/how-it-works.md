@@ -1,7 +1,7 @@
 ---
 title: How it works
 description: The three layers of the rule set, the order they apply in, and how one source file becomes six formats.
-order: 2
+order: 3
 updated: 2026-08-04
 ---
 
