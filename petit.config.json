@@ -2,7 +2,6 @@
   "title": "nkz harness",
   "theme": "deep",
   "deploy": "cloudflare",
-  "siteurl": "https://harness.nkz.md",
   "defaultScheme": "system",
   "schemeSwitcher": true,
   "maxWidth": "lg",

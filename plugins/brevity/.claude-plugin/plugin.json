@@ -2,7 +2,6 @@
   "name": "brevity",
   "displayName": "Brevity",
   "description": "Claude Code says less, and says it straight. Short replies, no jargon, no preamble. Applies ASD-STE100 Simplified Technical English to long replies.",
-  "version": "0.1.0",
   "author": {
     "name": "pehcastro",
     "url": "https://github.com/pehcastro"
