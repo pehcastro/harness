@@ -172,5 +172,5 @@ Read this section before citing any number above.
 
 ## Next steps
 
-- [Limits](/brevity/limits)
-- [Other agents](/brevity/other-agents)
+- [Limits](/docs/brevity/limits)
+- [Other agents](/docs/brevity/other-agents)

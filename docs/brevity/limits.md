@@ -45,7 +45,7 @@ Disabling the plugin gives your setting back:
 These hold regardless of which agent you run the rules in.
 
 - The rules are an instruction to a language model, not a filter on its output.
-  A model can ignore them. The [benchmarks](/brevity/benchmarks) measure how
+  A model can ignore them. The [benchmarks](/docs/brevity/benchmarks) measure how
   often it doesn't.
 - Code, command output, error text, and quotations are exempt.
 - A confirmation before an irreversible action is exempt. The rules don't
@@ -82,5 +82,5 @@ everything has.
 
 ## Next steps
 
-- [Benchmarks](/brevity/benchmarks)
-- [Other agents](/brevity/other-agents)
+- [Benchmarks](/docs/brevity/benchmarks)
+- [Other agents](/docs/brevity/other-agents)

@@ -46,7 +46,7 @@ paragraph of design advice nobody asked for.
 ## What you get
 
 Measured over one 10-turn session, run twice with the same prompts and model.
-The full method is in [benchmarks](/brevity/benchmarks).
+The full method is in [benchmarks](/docs/brevity/benchmarks).
 
 | | Without | With | Change |
 |---|---|---|---|
@@ -99,7 +99,7 @@ the next blocker, what changed, and the decision you have to make.
 > [!WARNING]
 > Confirmation before an irreversible action is explicitly exempt. Brevity will
 > not shorten a delete, a force push, or a publish into silent compliance. This
-> is tested. See [benchmarks](/brevity/benchmarks#hard-scenarios).
+> is tested. See [benchmarks](/docs/brevity/benchmarks#hard-scenarios).
 
 ## Where the rules came from
 
@@ -115,17 +115,17 @@ has, such as "do not praise your own subagent" and "do not print a scorecard."
 ```cards
 # How it works
 The three layers, and the order they apply in.
-/brevity/how-it-works
+/docs/brevity/how-it-works
 
 # The rules
 Every banned word and behavior.
-/brevity/rules
+/docs/brevity/rules
 
 # Benchmarks
 The method, the numbers, and what the tests found.
-/brevity/benchmarks
+/docs/brevity/benchmarks
 
 # Other agents
 Cursor, Windsurf, Cline, Copilot, and AGENTS.md.
-/brevity/other-agents
+/docs/brevity/other-agents
 ```

@@ -19,6 +19,10 @@ preamble, no status theater.
 /plugin install brevity@pehcastro
 ```
 
+[Docs](https://harness.nkz.md/docs/brevity/overview) ·
+[Installation](https://harness.nkz.md/docs/brevity/installation) ·
+[Benchmarks](https://harness.nkz.md/docs/brevity/benchmarks)
+
 Measured over one 10-turn session, run with and without: 84% fewer words, 59%
 fewer output tokens, 31% lower cost. The rules also ship for Cursor, Windsurf,
 Cline, Copilot, and anything that reads `AGENTS.md`. See

@@ -2,7 +2,7 @@
 
 A rule set that changes how an AI coding agent talks to you in the chat.
 
-Full documentation: **[harness.nkz.md/brevity/overview](https://harness.nkz.md/brevity/overview)**
+Full documentation: **[harness.nkz.md/docs/brevity/overview](https://harness.nkz.md/docs/brevity/overview)**
 
 It ships for Claude Code, Cursor, Windsurf, Cline, GitHub Copilot, and anything
 that reads `AGENTS.md`, which includes Codex. The rules are plain Markdown and

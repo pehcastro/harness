@@ -11,7 +11,7 @@ runtime.
 
 That design has a consequence worth stating early: the rules are an instruction
 to a language model, not a filter on its output. A model can ignore them. The
-[benchmarks](/brevity/benchmarks) measure how often it doesn't.
+[benchmarks](/docs/brevity/benchmarks) measure how often it doesn't.
 
 ## The three layers
 
@@ -54,7 +54,7 @@ applies to it.
 ```
 
 One rule sits above all four: never trade clarity for shortness. See
-[what it keeps](/brevity/overview#what-it-keeps).
+[what it keeps](/docs/brevity/overview#what-it-keeps).
 
 ## Simplified Technical English
 
@@ -129,6 +129,6 @@ which keeps the 5600-token body out of a normal session.
 
 ## Next steps
 
-- [The rules](/brevity/rules)
-- [Benchmarks](/brevity/benchmarks)
-- [Limits](/brevity/limits)
+- [The rules](/docs/brevity/rules)
+- [Benchmarks](/docs/brevity/benchmarks)
+- [Limits](/docs/brevity/limits)

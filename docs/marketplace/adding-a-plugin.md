@@ -143,5 +143,5 @@ plugin interferes, and a checker.
 
 ## Next steps
 
-- [What Brevity does](/brevity/overview), as a worked example
-- [Benchmarks](/brevity/benchmarks) for the testing approach
+- [What Brevity does](/docs/brevity/overview), as a worked example
+- [Benchmarks](/docs/brevity/benchmarks) for the testing approach

@@ -90,7 +90,7 @@ These cover punctuation and structure rather than vocabulary.
 > [!TIP]
 > The em dash rule originally said "write a period or a comma." That doesn't fit
 > a list label, so the model kept using dashes there. The rule now names the list
-> case. See [what the tests changed](/brevity/benchmarks#what-the-tests-changed).
+> case. See [what the tests changed](/docs/brevity/benchmarks#what-the-tests-changed).
 
 ## The seventeen behaviors
 
@@ -142,7 +142,7 @@ aside, because you'd read the aside as a detail and the work as agreement.
 ```
 
 The last two exist because a test caught their absence. See
-[what the tests changed](/brevity/benchmarks#what-the-tests-changed).
+[what the tests changed](/docs/brevity/benchmarks#what-the-tests-changed).
 
 ## What's exempt
 
@@ -157,5 +157,5 @@ The rules never apply to:
 
 ## Next steps
 
-- [Benchmarks](/brevity/benchmarks)
-- [Limits](/brevity/limits)
+- [Benchmarks](/docs/brevity/benchmarks)
+- [Limits](/docs/brevity/limits)

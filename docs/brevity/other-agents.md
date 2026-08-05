@@ -109,5 +109,5 @@ The script is POSIX `sh`. It needs no node, no jq, and no python.
 
 ## Next steps
 
-- [The rules](/brevity/rules)
-- [Limits](/brevity/limits)
+- [The rules](/docs/brevity/rules)
+- [Limits](/docs/brevity/limits)

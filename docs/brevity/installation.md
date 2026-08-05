@@ -9,7 +9,7 @@ Brevity is an output style. Claude Code reads it once, when a session starts, so
 installing it changes nothing until you restart or reload.
 
 This page assumes you've already
-[added the marketplace](/getting-started/add-the-marketplace).
+[added the marketplace](/docs/getting-started/add-the-marketplace).
 
 ## Install
 
@@ -123,10 +123,10 @@ no runtime.
 
 The rules carry no code, so they work in Cursor, Windsurf, Cline, GitHub
 Copilot, and anything that reads `AGENTS.md`. See
-[other agents](/brevity/other-agents).
+[other agents](/docs/brevity/other-agents).
 
 ## Next steps
 
-- [What Brevity does](/brevity/overview)
-- [How it works](/brevity/how-it-works)
-- [Limits](/brevity/limits)
+- [What Brevity does](/docs/brevity/overview)
+- [How it works](/docs/brevity/how-it-works)
+- [Limits](/docs/brevity/limits)

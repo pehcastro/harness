@@ -40,7 +40,7 @@ steps and its own warnings.
 # Brevity
 Makes the agent say less, and say it straight. Bans jargon, preamble, and status
 theater.
-/brevity/installation
+/docs/brevity/installation
 ```
 
 ## Keeping the catalog current
@@ -71,6 +71,6 @@ claude --version
 
 ## Next steps
 
-- [Install Brevity](/brevity/installation)
-- [What Brevity does](/brevity/overview)
-- [Add your own plugin](/marketplace/adding-a-plugin)
+- [Install Brevity](/docs/brevity/installation)
+- [What Brevity does](/docs/brevity/overview)
+- [Add your own plugin](/docs/marketplace/adding-a-plugin)

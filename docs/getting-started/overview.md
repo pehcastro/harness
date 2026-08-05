@@ -19,11 +19,11 @@ number and you can run it yourself.
 # Brevity
 Makes the agent say less, and say it straight. 84% fewer words on a measured
 10-turn session.
-/brevity/overview
+/docs/brevity/overview
 
 # Add the marketplace
 Register the catalog in Claude Code, then install what you want.
-/getting-started/add-the-marketplace
+/docs/getting-started/add-the-marketplace
 ```
 
 ## What a plugin looks like here
@@ -43,7 +43,7 @@ The catalog at `.claude-plugin/marketplace.json` lists them.
 Some plugins here carry no code at all. Brevity is a set of Markdown rules, so
 the same rules ship in the formats that Cursor, Windsurf, Cline, GitHub Copilot,
 and any agent reading `AGENTS.md` expect. See
-[other agents](/brevity/other-agents).
+[other agents](/docs/brevity/other-agents).
 
 > [!NOTE]
 > Only the Claude Code path is tested end to end. The other formats are
@@ -52,6 +52,6 @@ and any agent reading `AGENTS.md` expect. See
 
 ## Next steps
 
-- [Add the marketplace](/getting-started/add-the-marketplace)
-- [What Brevity does](/brevity/overview)
-- [Add your own plugin](/marketplace/adding-a-plugin)
+- [Add the marketplace](/docs/getting-started/add-the-marketplace)
+- [What Brevity does](/docs/brevity/overview)
+- [Add your own plugin](/docs/marketplace/adding-a-plugin)
