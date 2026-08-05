@@ -28,6 +28,24 @@ fewer output tokens, 31% lower cost. The rules also ship for Cursor, Windsurf,
 Cline, Copilot, and anything that reads `AGENTS.md`. See
 [plugins/brevity](plugins/brevity) for the numbers and the method.
 
+## Staying current
+
+Auto-update is off for this marketplace until you turn it on. Claude Code
+defaults every third-party marketplace to off, and nothing a plugin author
+writes can change that for you.
+
+To update by hand:
+
+```
+/plugin marketplace update pehcastro
+/plugin update <plugin>@pehcastro
+```
+
+To enable background updates, add `"autoUpdate": true` beside `source` in your
+`extraKnownMarketplaces` entry, or use `/plugin` and pick **Enable auto-update**
+on the Marketplaces tab. See
+[staying current](https://harness.nkz.md/docs/getting-started/add-the-marketplace#staying-current).
+
 ## Layout
 
 ```

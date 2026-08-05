@@ -43,10 +43,75 @@ theater.
 /docs/brevity/installation
 ```
 
-## Keeping the catalog current
+## Staying current
 
-Claude Code caches the catalog. If an install reports that a plugin isn't found,
-refresh it and try again:
+Updates don't arrive on their own. Auto-update is off for this marketplace until
+you turn it on, because Claude Code defaults every third-party marketplace to
+off and only Anthropic's own marketplaces to on.
+
+That default is a trust boundary. A marketplace is code from someone else's
+repository, so nothing a plugin author writes in `marketplace.json` or
+`plugin.json` can enable background updates for you. It's your decision to make.
+
+### Update by hand
+
+Two commands, and you know exactly which version you're on:
+
+```
+/plugin marketplace update pehcastro
+/plugin update brevity@pehcastro
+```
+
+Then restart Claude Code. `/plugin list` shows the version you're running.
+
+Use this while you're following a plugin closely, because it's immediate and
+predictable.
+
+### Or turn on auto-update
+
+Through the interface:
+
+```
+/plugin → Marketplaces → pehcastro → Enable auto-update
+```
+
+Or add one field to your `~/.claude/settings.json`:
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "pehcastro": {
+      "source": { "source": "github", "repo": "pehcastro/harness" },
+      "autoUpdate": true
+    }
+  }
+}
+```
+
+> [!NOTE]
+> Auto-update runs after a session starts, with a random delay of up to ten
+> minutes, and never applies mid-session. You'll either get a prompt to run
+> `/reload-plugins` or the new version loads next launch. If you need a specific
+> version right now, update by hand instead.
+
+To turn off every automatic update, including Claude Code's own, set the
+`DISABLE_AUTOUPDATER` environment variable. To keep plugin updates while
+stopping Claude Code from updating itself, set `FORCE_AUTOUPDATE_PLUGINS=1`
+alongside it.
+
+### How versions are decided
+
+Brevity has no `version` field while its rules are still changing, so its
+version is the git commit SHA and every push counts as an update. A plugin that
+pins an explicit version only updates when its author bumps that field.
+
+```
+Version: ed6c2d82dc30
+```
+
+### If an install says the plugin isn't found
+
+Your copy of the catalog is stale. Refresh it, then install again:
 
 ```
 /plugin marketplace update pehcastro

@@ -49,6 +49,22 @@ own once enabled.
 > including Explanatory, Learning, and any custom style you wrote. This is
 > tested, not assumed. Disabling the plugin gives your setting back.
 
+## Keeping it updated
+
+Brevity carries no `version` field while its rules are still changing, so its
+version is the git commit SHA and every push to the repository is an update.
+
+Updates aren't automatic unless you enable them. To pull the current version:
+
+```
+/plugin marketplace update pehcastro
+/plugin update brevity@pehcastro
+```
+
+Restart afterwards. See
+[staying current](/docs/getting-started/add-the-marketplace#staying-current) for
+auto-update and why it's off by default.
+
 ## Try it without installing
 
 Cloning and pointing Claude Code at the directory lasts one session and writes

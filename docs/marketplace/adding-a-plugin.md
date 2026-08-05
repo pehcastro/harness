@@ -97,11 +97,29 @@ Write `"source": "./plugins/my-plugin"` instead. That works.
 Every other directory belongs at the plugin root. Putting `skills/` inside
 `.claude-plugin/` means Claude Code never finds it.
 
-# Set an explicit version
+# Choose a versioning approach deliberately
 
-Without a `version`, the plugin is pinned to the git commit SHA, so every commit
-counts as a new version for everyone who installed it. Set the field and bump it
-deliberately.
+Claude Code uses the version string as its cache key. With `"version": "0.1.0"`
+in `plugin.json`, pushing a fix reaches nobody: users keep the cached copy and
+`/plugin update` reports they are current. You must bump the field every time.
+
+Omit `version` from both manifests and the git commit SHA is used instead, so
+every commit is an update. That suits a plugin whose rules are still changing.
+`claude plugin validate` warns about the missing field and still passes, though
+`--strict` treats the warning as an error.
+
+Brevity omits it for now and will pin an explicit version at 1.0.0 once its
+rules settle.
+
+# You cannot enable auto-update for your users
+
+`autoUpdate` is a field on the user's `extraKnownMarketplaces` entry, not
+something a marketplace or plugin manifest can set. Third-party marketplaces
+default to off, and only an organization administrator can turn it on for
+someone else through managed settings.
+
+This is a trust boundary rather than an oversight. Document how to enable it and
+let the reader decide.
 
 # Test in a throwaway config
 
