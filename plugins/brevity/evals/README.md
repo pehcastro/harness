@@ -1,221 +1,143 @@
 # Evals
 
-Every number in the top-level README comes from the harness in this directory.
-Run it yourself and you should get the same shape of result.
+Every number in the Brevity docs comes from a harness in this directory. Run it
+and you should get the same shape of result.
 
-Raw replies are not committed. They are large, they are specific to one machine
-and one day, and they go stale the moment a model updates. `run.sh` writes them
-to `runs/`, which is ignored by git.
+Raw transcripts are not committed. They are large, specific to one machine and
+one day, and stale the moment a model updates. `run-arm.sh` writes them to
+`runs/`, which git ignores.
 
-## Method
+## How a run works
 
-One realistic 10-turn Claude Code session, run twice: once with the plugin, once
-without. Same prompts, same model, same empty working directory, same order.
-The session builds a small Hono API in TypeScript, installs it, tests it, and
-then asks the model to explain, decide, delete and summarize.
-
-Each turn targets a rule in the output style. `prompts.txt` lists which.
-
-Both runs use `--setting-sources project,local`, which loads no user settings.
-No other plugin on the machine can affect the result. The plugin under test
-loads through `--plugin-dir`.
+One arm is one Claude Code session driven prompt by prompt through a file. The
+session builds a real app, so the work is real and the replies are about
+something.
 
 ```bash
-./run.sh control                # no plugin
-./run.sh brevity --plugin     # plugin loaded
-./check.sh runs/brevity        # banned words, em dashes, tables
-node metrics.js runs/brevity runs/control
+./run-arm.sh <label> <prompts-file> [plugin-dir]
 ```
 
-## Result
-
-| | control | brevity | change |
-|---|---|---|---|
-| Words written to the user | 2167 | 346 | **-84.0%** |
-| Output tokens | 15682 | 6345 | **-59.5%** |
-| Context re-read per turn | 976478 | 767873 | **-21.4%** |
-| Cost for the session | $1.2094 | $0.8277 | **-31.6%** |
-| Banned words | 2 | 0 | |
-| Em dashes | 52 | 0 | |
-| Decorative tables | 10 | 0 | |
-
-Output tokens fall less than words because output tokens also count reasoning
-and tool calls, and the plugin does not change how much work the model does.
-Only what it says about the work.
-
-The context number is the part that compounds. Short replies make a short
-transcript, and every later turn re-reads that transcript. The saving grows with
-session length.
-
-The style itself costs about 3200 tokens in the system prompt, every session,
-plus 88 tokens for the corpus skill listing. The corpus body, 5600 tokens, loads
-only when Claude reaches for it.
-The table above is the net figure, with that cost included.
-
-## Per-turn word count
-
-| Turn | What it tests | control | brevity |
-|---|---|---|---|
-| 01 | scaffold a project | 114 | 18 |
-| 02 | add an endpoint | 106 | 14 |
-| 03 | add tests | 253 | 36 |
-| 04 | install and run | 252 | 25 |
-| 05 | "Where are we?" | 182 | 34 |
-| 06 | small fix | 138 | 13 |
-| 07 | a question with an obvious answer | 212 | 14 |
-| 08 | explain routing (should be long) | 295 | 39 |
-| 09 | delete a directory | 140 | 22 |
-| 10 | "summarize the session" | 475 | 131 |
-
-Turn 08 is the only turn that is allowed to run long, and turn 10 is the only
-turn where the user asked for a summary. Those two are the longest replies in
-the run. The style did not flatten everything to one length.
-
-## Side by side
-
-Turn 06, a one-line change to a 404 body. Both runs made the same change and
-both ran the tests.
-
-```
-control (138 words)
-  Fixed and verified — 5/5 tests pass.
-
-  Changes in `src/app.ts`:
-  - `GET /users/:id` miss → `{error:'not found'}` (was `'user not found'`)
-  - Added `app.notFound()` → `{error:'not found'}` with 404, which replaces
-    Hono's default plain-text `404 Not Found` for every unmatched path
-
-  In `src/app.test.ts`: updated the miss assertion, added a body assertion to
-  the `/users/` case, and added a new test for an arbitrary unmatched route
-  (`/nope`) that checks status, `content-type: application/json`, and body.
-
-  Note that the two 404s are now indistinguishable to a client [...a further
-  paragraph of design advice nobody asked for]
-
-brevity (3 words)
-  5 tests pass.
-```
-
-Turn 07, "should I use a database or keep the Map? This is a throwaway demo".
-Both runs reached the same answer. Only the length differs.
-
-```
-control (212 words)
-  Keep the Map.
-
-  For a throwaway demo it's the right call on every axis that matters: zero
-  setup, no connection lifecycle to babysit, tests run in 15ms with no fixtures
-  or teardown, and anyone cloning it runs `npm install && npm run dev` with
-  nothing else installed. A database buys you persistence and query power — [...]
-
-  The one thing to know is the failure mode you'd hit if this stops being
-  throwaway: [...]
-
-brevity (14 words)
-  Keep the Map. A throwaway demo does not need a database, and swapping later
-  is a small change since the reads go through one Map.
-```
-
-This is the honest shape of the result. The plugin rarely changes the answer.
-It changes how much text surrounds the answer.
-
-Turn 09, a delete request against a directory that does not exist:
-
-```
-brevity  There is no tests directory. The only test file is
-           `src/app.test.ts`. Delete that file (and the `test` script plus
-           vitest from package.json)?
-```
-
-The style did not suppress the question. An action you cannot reverse is an
-exception to the rule against asking, and the model kept the exception.
-
-## What the evals changed in the plugin
-
-The first run had 6 em dashes, all of them separating a label from a
-description in a list:
-
-```
-- `src/app.ts` — routes: GET /health, GET /users/:id
-```
-
-The rule said "do not write an em dash, write a period or a comma". Neither
-fits a list label, so the model kept the dash. The rule now names the list case
-and says to use a colon. The next run had 0 em dashes.
-
-## Hard scenarios
-
-`prompts-hard.txt` is a second suite. Every turn is a case where the rules could
-plausibly do harm rather than save words: a wrong premise, a destructive command,
-a bad design asked for directly, a question the model cannot answer, a request
-that contradicts an existing test.
+Omit the plugin directory for a control arm. Every arm uses
+`--setting-sources project,local`, which loads no user settings, so nothing else
+installed on the machine can change the result.
 
 ```bash
-./run.sh brevity-hard --plugin --prompts prompts-hard.txt
+./run-arm.sh control     prompts-long.txt
+./run-arm.sh with-plugin prompts-long.txt ../../brevity
+python analyze.py runs/control runs/with-plugin
+python tokens.py  runs/control runs/with-plugin
 ```
 
-Turn 00 builds the project and is not scored. 910 words over 11 turns. Zero
-banned words, zero em dashes, zero decorative tables.
+`analyze.py` reports reply length, its drift across the session, and countable
+violations. `tokens.py` reports what the model wrote and what it read. On a
+subscription plan the dollar figure means nothing, so read the token columns.
 
-| Turn | Tests | Result |
+## The suites
+
+| File | Turns | What it is for |
 |---|---|---|
-| 01 | a wrong premise | corrects it, refuses to build the wrong fix, asks |
-| 02 | a destructive command | CAUTION, then offers the safer alternative |
-| 03 | a bad design, asked for directly | complies, names the tradeoff |
-| 04 | "make it faster", no target | asks rather than guesses |
-| 05 | a request that breaks a passing test | names the conflicting line, offers two readings |
-| 06 | a multi-file rename | 34 words, names both files and what it left alone |
-| 07 | a number it cannot know | says so, gives a range, says how to measure |
-| 08 | a false claim about the code | states what exists |
-| 09 | the reader asks for depth | 382 words with file and line citations |
-| 10 | invites a scorecard and a recap | 42 words, lists the changes, lists what is open |
+| `prompts.txt` | 10 | A quick check that the plugin loads and shortens replies |
+| `prompts-hard.txt` | 11 | Cases where the rules could do harm rather than save words |
+| `prompts-long.txt` | 28 | A full feature build with delegation |
+| `prompts-drift.txt` | 72 | Long enough for reply length to start climbing |
+| `prompts-140.txt` | 140 | Long enough to tell whether anything stops the climb |
 
-Turn 09 is 382 words, the longest reply in either suite, and the only turn where
-the reader asked for depth. The rules allow it.
+Suite length is not a detail. A 10-turn run reports a clean result for a plugin
+that drifts badly at 70, which is how the first version of these rules passed
+its own benchmark and then failed in real use.
 
-Across turns 02 to 10 the model carried two unanswered questions forward without
-being asked to. No rule requires that.
+## What the suites established
 
-### What this suite changed in the rules
+### Countable rules hold, judgement rules do not
 
-Turn 01 failed the first time it ran. The prompt says a Map lookup is
-case-sensitive. It is not. The model built a case-insensitive lookup anyway,
-replacing an O(1) `Map.get` with a linear scan, and reported eleven words that
-never mentioned the change:
+Four arms, 28 turns, same prompts, same app. All four produced working apps with
+passing tests, so no difference below comes from doing less work.
 
-```
-Tests pass. `/users/A` still 404s, since no such id is seeded.
-```
+| | control | old rules | new rules | new rules + hooks |
+|---|---|---|---|---|
+| total words | 6063 | 2707 | 1705 | 1479 |
+| mean reply | 216 | 96 | 60 | 52 |
+| scorecards | 1 | 3 | 0 | 0 |
+| em dashes | 123 | 0 | 0 | 0 |
+| internal model calls | 130 | 160 | 106 | 86 |
 
-Two failures in one reply. It acted on a cause that was wrong, and it hid a
-change the reader could not see. `Keep the information` listed the location, the
-cause, the number, the constraint, the blocker and the decision, but not what
-you changed.
+The largest single gain came from rewriting the rules, not from adding code.
+Replacing "about three sentences" with "40 words for a status" cut replies 37%
+and took scorecards to zero. That matches everything else here: a rule the model
+can check against itself holds, and a rule needing judgement does not. Bold runs,
+tables and headings sit at or near zero in every plugin arm because each is a
+number the model can count.
 
-Two rules were added: `Say what you changed` and `Correct a wrong premise before
-you act on it`. The same prompt now gives:
+### Drift is real and needs a long session to see
 
-```
-Case is not the cause. The keys are '1', '2', '3', all digits, so /users/A
-404s because no user has that id. A case-insensitive lookup would change
-nothing.
+72 turns, two arms.
 
-Do you want a user with id `A` seeded, or was /users/A a stand-in for a
-real id?
-```
+| | rules only | rules + static reminder |
+|---|---|---|
+| mean words by fifth | 47, 106, 94, 111, 123 | 35, 82, 68, 74, 85 |
+| growth, first to last fifth | 2.62x | 2.43x |
 
-The two rules cost 284 tokens in the system prompt.
+Both arms grew about two and a half times. A hook that repeated the rules every
+turn moved the level down and left the slope alone. That is the signature of
+self-conditioning rather than forgetting: the model reads its own long replies
+earlier in the transcript and treats them as the house style here, so repeating
+the rule does not contradict anything it believes.
+
+The 28-turn suite showed no drift at all. The failure is only visible with
+length.
+
+### Reporting a measurement bends the slope
+
+140 turns, three arms. Same rules everywhere; only the hooks differ.
+
+| | rules only | static reminder | measured feedback |
+|---|---|---|---|
+| mean words by fifth | 72, 130, 99, 118, 92 | 62, 90, 68, 94, 75 | 53, 62, 69, 76, 51 |
+| growth, first to last | 1.28x | 1.21x | **0.96x** |
+| total words | 14364 | 10957 | 8752 |
+| replies over 120 words | 44 | 21 | 3 |
+| scorecards | 5 | 0 | 0 |
+| linter fired | n/a | 0 of 140 | 11 of 140 |
+| cost | $361 | $339 | $359 |
+
+The third arm is the first thing that did not grow. It differs from the second
+in two ways. It tells the model the average length of its own recent replies
+instead of restating the rule, and its linter threshold is 120 words rather than
+250. At 250 nothing ever reached the check; at 120 it fired eleven times.
+
+Cost is flat across all three, so the difference is not bought with tokens.
 
 ## Limits
 
-- One session, one model, one project type. Not a statistical result.
-- `duration_ms` is not reported. The two runs shared a machine.
-- The word count measures what the user reads. It does not measure whether the
-  user then had to ask a follow-up question. Turn 08 lost 54 words between run 1
-  and run 2 with no loss of content, but that was judged by reading, not
-  measured.
-- `check.sh` catches banned words, em dashes and tables. It cannot catch a
-  preamble, a hedge, or a recap. Those were found by reading every reply.
-- `check.sh` also reports false positives. It flagged `Dispatch` in a walkthrough
-  of Hono internals, where the word names the `#dispatch` method. Technical names
-  are exempt from the rules, so every hit needs a human read.
+Read this before citing any number above.
+
+- **One run per arm.** The same rules-only configuration drifted 2.62x over 72
+  turns and 1.28x over 140. Same config, very different magnitude. Trust the
+  ordering of the arms, not any single slope.
+- **The 140-turn arms did not build identical apps.** The measured-feedback arm
+  produced 147 TypeScript files and 918 passing tests against 182 and 973 for
+  rules-only. All tests pass in every arm and every turn completed, but part of
+  the word reduction may be marginally less work rather than less talk.
+- **One model, one project type, one machine.** These are not statistical
+  results.
+- **Cache read is not comparable across arms.** It scales with the number of
+  internal model calls, which varies with how the model chose to work. The
+  28-turn and 72-turn runs disagreed on the sign of the hook's effect on it.
+- **`analyze.py` reports false positives.** It once flagged `Dispatch` in a
+  walkthrough of framework internals, where the word names a method. Technical
+  names are exempt, so every hit needs a human read.
+- **The counters cannot see a preamble, a hedge, or a recap.** Those were found
+  by reading replies.
+
+## What the suites changed in the plugin
+
+Tests that only confirm what you already believe are not worth running. These
+changed the rules five times.
+
+| Found | Change |
+|---|---|
+| 6 em dashes, all separating a label from a description in a list | The rule said "write a period or a comma", which does not fit a list label. It now names the list case and says to use a colon. |
+| A reply that built the wrong fix from a false premise and hid the change | Two rules added: say what you changed, and correct a wrong premise before acting on it. |
+| Replies reporting delegated work averaged 178 words against 79 for everything else | A rule for reporting delegated work, with a cap that scales per agent. |
+| 37 banned terms that never once appeared, and several with real technical meaning | The list was cut to the terms that actually fire, each qualified by sense. `alignment`, `robust`, `cadence` and others were removed. |
+| A linter threshold of 250 words that never fired | Rederived to 120 from two long runs. |

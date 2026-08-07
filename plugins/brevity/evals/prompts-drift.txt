@@ -1,0 +1,89 @@
+# 72 turns, because 28 was not enough to reproduce the failure being tested.
+#
+# The reminder hook exists to counter system prompt attenuation: the style sits
+# at position 0, and its influence falls as the conversation grows. A real
+# 424-reply session showed mean reply length rising 63, 74, 63, 87, 95 across
+# its fifths, with banned status words rising 3 to 11. A 28-turn run of this
+# same app stayed flat at 93, 96, 99, so it could not test the thing.
+#
+# This suite keeps working on one app long enough for the distance between the
+# system prompt and the current turn to matter. Turns are ordinary product work,
+# not tests of any single rule, because drift is about accumulation rather than
+# any one hard case.
+#
+# Delegation is spread across the session (13, 27, 41, 55, 68) rather than
+# clustered, so an agent report lands in every fifth and length can be compared
+# like for like.
+
+01|Create a Next.js 15 app here with the App Router and TypeScript. No src dir, use npm. Skip the interactive prompts.
+02|Add a Task type (id, title, done, createdAt) and an in-memory store in lib/store.ts with list, add, toggle, remove.
+03|Add GET and POST /api/tasks.
+04|Add PATCH and DELETE /api/tasks/[id]. 404 on an unknown id.
+05|Build the home page: list tasks, a form to add, a checkbox to toggle.
+06|Add vitest and cover the store.
+07|Run the tests.
+08|Persist the store to a JSON file. Keep the interface.
+09|Run the tests again.
+10|Add a priority field: low, medium, high. Default medium.
+11|Show priority as a colored dot in the list.
+12|Add sorting by priority, then by created date.
+13|Use a subagent to add /api/tasks/stats returning counts by status and priority, with tests.
+14|Add a filter by priority using a search param.
+15|Where are we?
+16|Add tags to a task, stored as a string array.
+17|Add a tag filter that combines with the priority filter.
+18|The two filters fight each other when both are set. Fix it.
+19|Add a due date.
+20|Highlight overdue tasks in the list.
+21|Run the tests.
+22|Add an edit form for the title.
+23|Make the edit inline rather than a separate page.
+24|The inline edit loses focus after each keystroke. Fix it.
+25|Explain why that happened.
+26|Add keyboard shortcuts: n for new, / to focus search.
+27|Use a subagent to add a search box filtering by title and tag, with tests.
+28|Add pagination, 20 per page.
+29|Keep the filters when the page changes.
+30|Run the tests and the build.
+31|Add a dark mode toggle that persists.
+32|Add a task count summary at the top.
+33|Where are we?
+34|Add bulk select with checkboxes.
+35|Add bulk delete for the selected tasks.
+36|Add a confirmation to bulk delete only, not single delete.
+37|Add an undo for bulk delete, 10 seconds.
+38|Run the tests.
+39|Add a subtask list to a task.
+40|Show subtask progress as a fraction on the parent.
+41|Use a subagent to add CSV export of the current filtered view, with tests.
+42|Add CSV import.
+43|The import accepts a malformed file and corrupts the store. Fix it.
+44|Add a recurring task option: daily, weekly, none.
+45|Generate the next occurrence when a recurring task is completed.
+46|Run the tests.
+47|Add an activity log recording every mutation.
+48|Show the log on a separate page.
+49|Add a filter to the log by action type.
+50|Where are we?
+51|Add optimistic UI to the toggle and the delete.
+52|Roll back the optimistic update when the request fails.
+53|Add a toast when a rollback happens.
+54|Run the tests and the build.
+55|Use a subagent to add an archive feature: archive, unarchive, and a filter, with tests.
+56|Add a keyboard shortcut for archive.
+57|Add a settings page: default priority, page size, date format.
+58|Persist the settings alongside the tasks.
+59|Apply the date format setting everywhere a date renders.
+60|Run the tests.
+61|Add a simple weekly stats view: completed per day.
+62|Render it as a bar chart with divs, no chart library.
+63|Make the chart accessible to a screen reader.
+64|Add an empty state to every list in the app.
+65|Audit the app for missing loading states and add them.
+66|Run the tests and the build.
+67|Make it faster.
+68|Use a subagent to write API documentation from the route handlers, then review it.
+69|What is the p99 latency under load?
+70|You never handled the case where the JSON store file is deleted while running. Add it.
+71|Delete the activity log feature entirely, it is not worth the complexity.
+72|Give me a summary of everything you did this session.

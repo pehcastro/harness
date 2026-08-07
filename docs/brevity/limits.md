@@ -1,8 +1,8 @@
 ---
 title: Limits and configuration
 description: What Brevity cannot do, why it has no settings, and how to show the active style in your status line.
-order: 7
-updated: 2026-08-04
+order: 8
+updated: 2026-08-07
 ---
 
 This page covers what Brevity doesn't do. Read it before you install, because
@@ -66,13 +66,27 @@ it. That's an instruction, not a guarantee.
 The style also loads once, at session start. Changing it needs `/clear` or a new
 session.
 
+## Reply length still grows
+
+Over a long session replies get longer, and no version of this plugin stops that
+completely. Measured over 140 turns, the rules alone grew 1.28x from the first
+fifth to the last. With the hooks reporting the model its own recent average, the
+figure was 0.96x, which is flat within the noise of a single run.
+
+So the rules decide where the climb starts, and the hooks flatten it. Neither
+removes it. On a very long session, expect replies to be longer at the end than
+at the beginning.
+
 ## Untested areas
 
 Being explicit about what hasn't been checked is more useful than implying
 everything has.
 
-- Sessions longer than 11 turns. Drift after 30 or more turns, or after a
-  context compaction, isn't measured.
+- Behaviour after a context compaction. Sessions up to 140 turns are measured,
+  but not what a compaction does to the rules.
+- Every result is one run per arm. The same configuration drifted 2.62x over 72
+  turns and 1.28x over 140, so trust the ordering of the arms rather than any
+  single number.
 - Plan mode. Plans are structured by nature, and the rules push against
   structure.
 - Whether short replies become annoying in daily use. The benchmarks count

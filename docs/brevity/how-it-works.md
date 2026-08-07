@@ -2,7 +2,7 @@
 title: How it works
 description: The three layers of the rule set, the order they apply in, and how one source file becomes six formats.
 order: 3
-updated: 2026-08-04
+updated: 2026-08-07
 ---
 
 Brevity is a Markdown file that Claude Code loads into the system prompt at the
@@ -10,8 +10,10 @@ start of a session. Nothing executes. There's no hook, no script, and no
 runtime.
 
 That design has a consequence worth stating early: the rules are an instruction
-to a language model, not a filter on its output. A model can ignore them. The
-[benchmarks](/docs/brevity/benchmarks) measure how often it doesn't.
+to a language model, not a filter on its output. A model can ignore them, and
+over a long session it increasingly does. Two hooks push back on that, and
+[enforcement](/docs/brevity/enforcement) explains how. The
+[benchmarks](/docs/brevity/benchmarks) measure how well it works.
 
 ## The three layers
 
@@ -129,6 +131,7 @@ which keeps the 5600-token body out of a normal session.
 
 ## Next steps
 
+- [Enforcement](/docs/brevity/enforcement)
 - [The rules](/docs/brevity/rules)
 - [Benchmarks](/docs/brevity/benchmarks)
 - [Limits](/docs/brevity/limits)

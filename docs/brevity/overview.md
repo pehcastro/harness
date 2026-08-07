@@ -2,7 +2,7 @@
 title: What Brevity does
 description: An output style that makes Claude Code say less and say it straight.
 order: 1
-updated: 2026-08-04
+updated: 2026-08-07
 ---
 
 Brevity changes how a coding agent talks to you. It doesn't change what the
@@ -116,6 +116,10 @@ has, such as "do not praise your own subagent" and "do not print a scorecard."
 # How it works
 The three layers, and the order they apply in.
 /docs/brevity/how-it-works
+
+# Enforcement
+The two hooks, and why an instruction alone is not enough.
+/docs/brevity/enforcement
 
 # The rules
 Every banned word and behavior.

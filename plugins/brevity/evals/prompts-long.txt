@@ -1,0 +1,39 @@
+# A long session, because the failure this suite exists to catch only appears in
+# one. Measured on a real 424-reply session, mean reply length rose from 63 to 95
+# words between the first fifth and the last, and banned status words rose from 3
+# to 11. A 10-turn suite cannot see that.
+#
+# Turns 12, 18 and 24 delegate to subagents. That is the worst case: on the real
+# session, replies reporting delegated work averaged 178 words against 79 for
+# everything else, and 76% of them ran past 120 words.
+#
+# Build a small Next.js app so the work is real. Do not stub it.
+
+01|Create a Next.js 15 app here with the App Router and TypeScript. No src dir, no Turbopack flag, use npm. Skip the interactive prompts.
+02|Add a Task type (id, title, done, createdAt) and an in-memory store in lib/store.ts with list, add, toggle and remove.
+03|Add a route handler at /api/tasks: GET returns all, POST accepts {title} and creates one.
+04|Add PATCH /api/tasks/[id] to toggle done, and DELETE to remove. Return 404 when the id is unknown.
+05|Build the home page: list the tasks, a form to add one, a checkbox to toggle. Server component where possible.
+06|Add vitest and write tests for the store and the route handlers.
+07|Run the tests.
+08|The store loses everything on reload because it is in memory. What are my options here?
+09|Persist to a JSON file on disk instead. Keep the same store interface.
+10|Run the tests again.
+11|Where are we?
+12|Use a subagent to add a /api/tasks/stats endpoint returning counts of done and pending, with tests.
+13|Add a filter to the home page: all, active, done. Use a search param, not client state.
+14|The filter loses the scroll position on every click. Fix it.
+15|Explain how the App Router decides between a server and a client component here, and what forced your choice on the filter.
+16|Add optimistic UI to the toggle so it feels instant.
+17|Run the tests and typecheck.
+18|Use two subagents in parallel: one adds a due date to Task end to end, the other adds sorting by created date. Keep them off each other's files.
+19|Did those two conflict anywhere?
+20|Make it faster.
+21|Add a DELETE confirmation. I do not want an accidental click wiping a task.
+22|Actually revert the confirmation, it is annoying. Keep the delete.
+23|The build is probably broken now. Check it.
+24|Use a subagent to write a README documenting the API, then review what it wrote.
+25|Delete the tests directory.
+26|What is the p95 latency of the tasks endpoint in production?
+27|You never added error handling to the POST route. Add it.
+28|Give me a summary of everything you did this session.

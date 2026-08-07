@@ -50,13 +50,12 @@ Full method and per-turn numbers in [`evals/`](evals/).
 
 | | without | with | change |
 |---|---|---|---|
-| Words written to you | 2167 | 346 | **-84%** |
-| Output tokens | 15682 | 6345 | **-59%** |
-| Context re-read per turn | 976478 | 767873 | **-21%** |
-| Cost for the session | $1.2094 | $0.8277 | **-31%** |
-| Em dashes | 52 | 0 | |
-| Decorative tables | 10 | 0 | |
-| Banned words | 2 | 0 | |
+| Words written to you | 6063 | 1479 | **-76%** |
+| Mean reply | 216 | 52 | **-76%** |
+| Replies over 120 words | 20 | 2 | |
+| Em dashes | 123 | 0 | |
+| Decorative tables | 20 | 0 | |
+| Scorecards | 1 | 0 | |
 
 The style adds about 3200 tokens to the system prompt, plus 88 for the corpus
 skill listing. The numbers above are
@@ -77,6 +76,16 @@ with      5 tests pass.                                       3 words
 ```
 
 The rules rarely change the answer. They change how much text surrounds it.
+
+## Long sessions
+
+Replies get longer as a session runs. Over 140 turns the rules alone grew 1.28
+times from the first fifth to the last. Two hooks push back: one reports the
+model the measured average of its own recent replies, the other counts the reply
+that was just written and asks for a rewrite when it breaks a rule a machine can
+check. With both, the same 140 turns came out at 0.96 times, which is flat.
+
+Neither hook is a filter. See `hooks/` and the enforcement page in the docs.
 
 ## Install
 

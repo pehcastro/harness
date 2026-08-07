@@ -76,8 +76,23 @@ mkdir -p output-styles adapters/cursor adapters/windsurf adapters/cline adapters
   cat "$CORE"
 } > adapters/copilot/copilot-instructions.md
 
+# --- the per-turn reminder, extracted from the rules ------------------------
+# The hook must not carry its own copy of the caps. It reads them from here, so
+# editing rules/core.md is the only way to change what the reminder says.
+{
+  awk '/^## Message length/,/^## Rule order/' "$CORE" \
+    | grep '^| ' | grep -v '^| Kind' | grep -v '^|---' \
+    | sed 's/^| *//; s/ *| */: /; s/ *|$//' \
+    | awk '{ printf "%s. ", $0 }'
+  printf "Never write: "
+  awk '/^## Status words/,/^## Consultant/' "$CORE" \
+    | grep '^| ' | grep -v '^| Banned' | grep -v '^|---' \
+    | sed 's/^| *//; s/ *|.*//' | tr '\n' ',' | sed 's/,$//; s/,/, /g'
+  printf ". No em dash. No stacked test or typecheck counts. No preamble, no recap, no closing offer."
+} > hooks/reminder.txt
+
 echo "generated from $CORE:"
-for f in output-styles/brevity.md adapters/agents/AGENTS.md \
+for f in output-styles/brevity.md hooks/reminder.txt adapters/agents/AGENTS.md \
          adapters/cursor/brevity.mdc adapters/windsurf/brevity.md \
          adapters/cline/brevity.md adapters/copilot/copilot-instructions.md; do
   printf '  %-46s %s lines\n' "$f" "$(wc -l < "$f" | tr -d ' ')"

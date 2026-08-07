@@ -1,8 +1,8 @@
 ---
 title: Benchmarks
 description: The method behind every number, the hard scenario suite, and the defects the tests found.
-order: 5
-updated: 2026-08-04
+order: 6
+updated: 2026-08-07
 ---
 
 Every number in these docs comes from a harness in `plugins/brevity/evals`. This
@@ -36,47 +36,42 @@ node metrics.js runs/brevity runs/control
 
 ## Results
 
-| | Control | Brevity | Change |
+Four arms, 28 turns, same prompts, same app. Every arm produced a working app
+with passing tests, so nothing below comes from doing less work.
+
+| | control | old rules | current rules | rules + hooks |
+|---|---|---|---|---|
+| total words | 6063 | 2707 | 1705 | 1479 |
+| mean reply | 216 | 96 | 60 | 52 |
+| replies over 120 words | 20 | 9 | 3 | 2 |
+| em dashes | 123 | 0 | 0 | 0 |
+| scorecards | 1 | 3 | 0 | 0 |
+
+The biggest single gain came from rewriting the rules rather than adding code.
+Replacing "about three sentences" with "40 words for a status" cut replies 37%
+and took scorecards to zero. Countable rules hold; rules needing judgement do
+not.
+
+## Long sessions
+
+Short suites miss the failure that matters. Over 72 turns, replies grew about
+two and a half times from the first fifth of the session to the last, whether or
+not a hook repeated the rules every turn. The 28-turn suite showed no drift at
+all.
+
+Over 140 turns, with the same rules in every arm and only the hooks differing:
+
+| | rules only | static reminder | measured feedback |
 |---|---|---|---|
-| Words written to the user | 2167 | 346 | 84.0% fewer |
-| Output tokens | 15682 | 6345 | 59.5% fewer |
-| Context re-read per turn | 976478 | 767873 | 21.4% less |
-| Cost for the session | $1.2094 | $0.8277 | 31.6% lower |
-| Banned words | 2 | 0 | |
-| Em dashes | 52 | 0 | |
-| Decorative tables | 10 | 0 | |
+| mean words by fifth | 72, 130, 99, 118, 92 | 62, 90, 68, 94, 75 | 53, 62, 69, 76, 51 |
+| growth, first to last | 1.28x | 1.21x | **0.96x** |
+| total words | 14364 | 10957 | 8752 |
+| replies over 120 words | 44 | 21 | 3 |
+| cost | $361 | $339 | $359 |
 
-Output tokens fall by less than words because output tokens also count reasoning
-and tool calls. The plugin doesn't change how much work the model does, only what
-it says about the work.
-
-The context number compounds. Short replies make a short transcript, and every
-later turn re-reads that transcript, so the saving grows with session length.
-
-The style costs about 3200 tokens in the system prompt every session, plus 88
-for the corpus skill listing. The table above is net of that cost.
-
-## Per-turn word count
-
-Turn 08 is the only turn where the reader asks for depth, and turn 10 is the
-only one that asks for a summary. Those two are the longest replies in the run,
-which is the intended behavior.
-
-| Turn | What it tests | Control | Brevity |
-|---|---|---|---|
-| 01 | scaffold a project | 114 | 18 |
-| 02 | add an endpoint | 106 | 14 |
-| 03 | add tests | 253 | 36 |
-| 04 | install and run | 252 | 25 |
-| 05 | "Where are we?" | 182 | 34 |
-| 06 | small fix | 138 | 13 |
-| 07 | a question with an obvious answer | 212 | 14 |
-| 08 | explain routing | 295 | 39 |
-| 09 | delete a directory | 140 | 22 |
-| 10 | "summarize the session" | 475 | 131 |
-
-The rules didn't flatten every reply to one length. They allocated length to the
-turns that earned it.
+The third arm is the only configuration whose replies did not grow. It reports
+the model's own recent average rather than restating the rule. See
+[enforcement](/docs/brevity/enforcement).
 
 ## Hard scenarios
 

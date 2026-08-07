@@ -1,7 +1,7 @@
 ---
 title: Other agents
 description: Use the Brevity rules in Cursor, Windsurf, Cline, GitHub Copilot, and anything that reads AGENTS.md.
-order: 6
+order: 7
 updated: 2026-08-04
 ---
 

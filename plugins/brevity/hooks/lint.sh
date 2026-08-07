@@ -11,11 +11,28 @@
 # rules, because a linter that is wrong teaches the model to ignore it.
 #
 # POSIX sh and awk. No node, no jq.
+#
+# Set BREVITY_LINT_LOG to a file path to record every verdict, one line per
+# turn, as "words<TAB>verdict". Used by the benchmark to count how often the
+# hook fires. Unset by default, so a normal session writes nothing.
 
-awk '
+DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+. "$DIR/state.sh"
+
+INPUT=$(cat)
+SID=$(brevity_session_id "$INPUT")
+STATE=$(brevity_state_file "$SID")
+
+BREVITY_LINT_LOG="${BREVITY_LINT_LOG:-}"
+export BREVITY_LINT_LOG STATE
+
+printf '%s' "$INPUT" | awk '
   { doc = doc $0 "\n" }
 
   END {
+    LOG   = ENVIRON["BREVITY_LINT_LOG"]
+    STATE = ENVIRON["STATE"]
+
     # Tolerate any spacing around the colon: producers differ.
     if (match(doc, /"stop_hook_active"[ \t]*:[ \t]*true/)) { print "{}"; exit }
 
@@ -81,20 +98,27 @@ awk '
     opener = 0
     if (body ~ /^[ \t\n]*(You are right|You.re right|Great question|Good catch|Exactly right|Absolutely right)/) opener = 1
 
-    # 250, not the 40 to 150 the rules ask for. Below 250 a long reply is
-    # sometimes correct, because the reader asked for depth, and this script
-    # cannot see the question. Measured on 424 real replies: above 250 words,
-    # none of them followed a request for detail. Below it, 6% did.
-    # The tighter caps stay in the rules, where judgement is available.
+    # 120, re-derived from two 72-turn runs. The old 250 came from a session
+    # with no caps in the rules; once the caps existed almost nothing reached it,
+    # so the check never fired. At 120 it catches 24 genuinely over-long replies
+    # in a 72-turn run against 3 where the reader had asked for depth. Those 3
+    # are recoverable: the message below says to keep the length if it was asked
+    # for, so a wrong flag costs a sentence, not the answer.
     msgs = ""
-    if (words > 250) msgs = add(msgs, "it is " words " words, past the point where any reply is still a conversation. Unless the reader asked you to explain or compare, cut it to the cap: 40 for a status, 80 for an answer, 60 plus 15 per agent for delegated work, 150 for a session summary")
+    if (words > 120) msgs = add(msgs, "it is " words " words. If the reader asked you to explain, compare, or summarise the session, keep the length and ignore this. Otherwise cut to the cap: 40 for a status, 80 for an answer, 60 plus 15 per agent for delegated work, 150 for a session summary")
     if (emdash > 0)  msgs = add(msgs, "it has " emdash " em dash(es). Use a period, a comma, or a colon in a list")
     if (bold > 3)    msgs = add(msgs, "it has " bold " bold phrases and the cap is 3")
     if (nbanned > 0) msgs = add(msgs, "it uses banned status words: " blist)
     if (scorecard)   msgs = add(msgs, "it prints a test or typecheck count, which is a scorecard")
     if (opener)      msgs = add(msgs, "it opens by agreeing with the reader instead of stating the fact")
 
-    if (msgs == "") { print "{}"; exit }
+    if (STATE != "") print words >> STATE
+
+    if (msgs == "") {
+      if (LOG != "") print words "	clean" >> LOG
+      print "{}"; exit
+    }
+    if (LOG != "") print words "	" msgs >> LOG
 
     out = "Brevity check on the reply you just wrote: " msgs ". Rewrite it shorter, keeping every fact: the location, the cause, the numbers the reader needs, and any open question. Give the rewrite only, with no apology and no explanation of the edit."
 
