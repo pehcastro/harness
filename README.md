@@ -38,8 +38,11 @@ To update by hand:
 
 ```
 /plugin marketplace update pehcastro
-/plugin update <plugin>@pehcastro
 ```
+
+Then open `/plugin`, pick the plugin, and choose update. There is no
+`/plugin update` slash command. From a terminal, `claude plugin update
+<plugin>@pehcastro` does the same thing.
 
 To enable background updates, add `"autoUpdate": true` beside `source` in your
 `extraKnownMarketplaces` entry, or use `/plugin` and pick **Enable auto-update**

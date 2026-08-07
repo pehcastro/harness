@@ -101,7 +101,7 @@ Every other directory belongs at the plugin root. Putting `skills/` inside
 
 Claude Code uses the version string as its cache key. With `"version": "0.1.0"`
 in `plugin.json`, pushing a fix reaches nobody: users keep the cached copy and
-`/plugin update` reports they are current. You must bump the field every time.
+an update check reports they are current. You must bump the field every time.
 
 Omit `version` from both manifests and the git commit SHA is used instead, so
 every commit is an update. That suits a plugin whose rules are still changing.

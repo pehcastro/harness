@@ -58,10 +58,16 @@ Updates aren't automatic unless you enable them. To pull the current version:
 
 ```
 /plugin marketplace update pehcastro
-/plugin update brevity@pehcastro
 ```
 
-Restart afterwards. See
+Then open `/plugin`, select **brevity**, and choose update. Restart afterwards.
+
+There is no `/plugin update <name>` slash command. Typing one does nothing and
+prints nothing. From a terminal, outside Claude Code, this does the same job:
+
+```bash
+claude plugin update brevity@pehcastro
+``` See
 [staying current](/docs/getting-started/add-the-marketplace#staying-current) for
 auto-update and why it's off by default.
 

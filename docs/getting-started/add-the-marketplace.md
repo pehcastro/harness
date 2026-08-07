@@ -55,14 +55,19 @@ repository, so nothing a plugin author writes in `marketplace.json` or
 
 ### Update by hand
 
-Two commands, and you know exactly which version you're on:
+Refresh the catalog:
 
 ```
 /plugin marketplace update pehcastro
-/plugin update brevity@pehcastro
 ```
 
-Then restart Claude Code. `/plugin list` shows the version you're running.
+Then open `/plugin`, pick the plugin, and choose update. Restart Claude Code
+afterwards. `/plugin list` shows the version you're running.
+
+> [!NOTE]
+> `/plugin update <name>` is not a command. Typing it does nothing and prints no
+> error. Update through the `/plugin` panel, or from a terminal outside Claude
+> Code with `claude plugin update <name>@pehcastro`.
 
 Use this while you're following a plugin closely, because it's immediate and
 predictable.
