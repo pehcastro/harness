@@ -1,7 +1,7 @@
 ---
 title: The rules
 description: Every banned word, format rule, and behavior in the Brevity rule set.
-order: 5
+order: 6
 updated: 2026-08-04
 ---
 
@@ -85,6 +85,9 @@ A reply inside its cap does not get one. It is already the short version.
 
 The linter does not count the TLDR toward the length check, since it is the
 compression rather than padding.
+
+To compress something after the fact, on demand, use
+[the tldr command](/docs/brevity/tldr).
 
 ## Format rules
 

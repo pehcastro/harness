@@ -1,7 +1,7 @@
 ---
 title: Limits and configuration
 description: What Brevity cannot do, why it has no settings, and how to show the active style in your status line.
-order: 8
+order: 9
 updated: 2026-08-07
 ---
 

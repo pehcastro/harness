@@ -121,6 +121,10 @@ The three layers, and the order they apply in.
 The two hooks, and why an instruction alone is not enough.
 /docs/brevity/enforcement
 
+# The tldr command
+Compress the last reply, or the session, on demand.
+/docs/brevity/tldr
+
 # The rules
 Every banned word and behavior.
 /docs/brevity/rules

@@ -25,6 +25,10 @@ update. An explicit version returns at 1.0.0 once they settle.
   It sits at the end because text streams from the top down, so that is where
   the reader is looking when generation finishes. The linter does not count it
   toward the length check.
+- A `tldr` command. `/brevity:tldr` compresses the last reply, `/brevity:tldr
+  session` the whole session. Copy `commands/tldr.md` into your own commands
+  directory for a plain `/tldr`, since Claude Code namespaces anything a plugin
+  provides.
 - Benchmarks at 72 and 140 turns. Shorter suites cannot see drift.
 - `CHANGELOG.md`.
 

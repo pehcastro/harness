@@ -1,7 +1,7 @@
 ---
 title: Benchmarks
 description: The method behind every number, the hard scenario suite, and the defects the tests found.
-order: 6
+order: 7
 updated: 2026-08-07
 ---
 
