@@ -60,11 +60,15 @@ printf '%s' "$INPUT" | awk '
     gsub(/\\t/, " ", msg)
     gsub(/\\"/, "\"", msg)
 
-    # fenced code is exempt from every check
-    body = ""; infence = 0
+    # Fenced code is exempt from every check, and so is the TLDR at the end.
+    # The TLDR is the compressed version of the reply, so counting it would
+    # punish the rule that asks for it.
+    body = ""; infence = 0; intldr = 0
     m = split(msg, L, "\n")
     for (j = 1; j <= m; j++) {
       if (L[j] ~ /^[ \t]*```/) { infence = 1 - infence; continue }
+      if (infence == 0 && L[j] ~ /^[ \t]*(\*\*)?TLDR(\*\*)?[ \t]*:?[ \t]*$/) { intldr = 1; continue }
+      if (infence == 0 && intldr == 1) continue
       if (infence == 0) body = body L[j] "\n"
     }
 

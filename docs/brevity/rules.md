@@ -75,6 +75,17 @@ that said, having said that, to be fair, in some sense, essentially, basically,
 actually, really, just, simply.
 ```
 
+## Long replies end with a TLDR
+
+A reply that goes over its cap closes with a summary under a bold `TLDR`
+heading. It goes at the end, not the top: text streams from the top down, so the
+end is where you are looking when it finishes.
+
+A reply inside its cap does not get one. It is already the short version.
+
+The linter does not count the TLDR toward the length check, since it is the
+compression rather than padding.
+
 ## Format rules
 
 These cover punctuation and structure rather than vocabulary.

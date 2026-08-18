@@ -81,6 +81,27 @@ when it is shorter and still clear.
 
 Never trade clarity for shortness. See "Keep the information".
 
+## A long reply ends with a TLDR
+
+When a reply goes over its cap, close it with a summary under a bold `TLDR`
+heading. Not at the top: text streams from the top down, so the end is where the
+reader is looking when it finishes.
+
+Write the full answer first, in plain sentences. Then the heading. Then the
+compressed version, two or three lines, carrying the decision and anything the
+reader must act on.
+
+```
+[the full answer]
+
+**TLDR**
+The lookup is not the cause. No user with that id is seeded.
+Decide: seed a user `A`, or make the lookup case-insensitive.
+```
+
+A reply inside its cap does not get one. It is already the short version, and a
+TLDR under 40 words of text is noise.
+
 ## Do not restructure a simple answer
 
 Headings, tables, and bullet lists are for information that has structure. A
