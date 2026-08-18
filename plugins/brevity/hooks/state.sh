@@ -1,11 +1,23 @@
 #!/bin/sh
 # Where the two hooks share per-session state.
 #
-# lint.sh appends the word count of every reply. remind.sh reads the recent ones
-# back and tells the model what it has actually been doing. That is the point:
-# drift is not the model forgetting the rules, it is the model reading its own
-# long replies earlier in the transcript and treating them as the house style.
-# A number it cannot argue with breaks that loop; repeating the rule does not.
+# lint.sh appends one line per reply, two columns separated by a tab: the word
+# count, then the verdict, empty when the reply broke no rule a machine counts.
+# remind.sh reads the recent counts back as an average, and the last verdict as
+# a specific note.
+#
+# That is the point: drift is not the model forgetting the rules, it is the
+# model reading its own long replies earlier in the transcript and treating them
+# as the house style. A number it cannot argue with breaks that loop; repeating
+# the rule does not.
+#
+# The verdict travels through this file rather than back out of the Stop hook,
+# because assistant text streams to the reader as it is produced. A Stop hook
+# runs after the reader has read the reply, so it cannot replace one, only add a
+# second. See the note at the head of lint.sh.
+#
+# A line written before the second column existed holds one field, and remind.sh
+# reads it as a count with no verdict.
 #
 # One file per session, in the system temp directory. Nothing is cleaned up on
 # exit because a session can be resumed; files are small and the OS clears temp.

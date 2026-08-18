@@ -1,6 +1,14 @@
 #!/bin/sh
-# Stop hook. Checks the reply that was just written and asks for a rewrite when
-# it breaks a countable rule.
+# Stop hook. Checks the reply that was just written and records the verdict for
+# the next turn. It asks for nothing in this turn.
+#
+# It cannot ask for a rewrite, and this is the reason. Assistant text streams to
+# the terminal as the model produces it, so a Stop hook runs after the reader has
+# already read the reply. No hook can suppress or replace it: MessageDisplay is
+# the only event that sees assistant text and the documentation calls it
+# display-only. A rewrite here shows the reader two replies, the long one and the
+# short one, which is worse than the long one alone.
+# See https://code.claude.com/docs/en/hooks
 #
 # This is the part that is not a suggestion. Word counts, banned terms, em
 # dashes and bold runs are counted by this script, not judged by the model.
@@ -105,26 +113,26 @@ printf '%s' "$INPUT" | awk '
     # are recoverable: the message below says to keep the length if it was asked
     # for, so a wrong flag costs a sentence, not the answer.
     msgs = ""
-    if (words > 120) msgs = add(msgs, "it is " words " words. If the reader asked you to explain, compare, or summarise the session, keep the length and ignore this. Otherwise cut to the cap: 40 for a status, 80 for an answer, 60 plus 15 per agent for delegated work, 150 for a session summary")
-    if (emdash > 0)  msgs = add(msgs, "it has " emdash " em dash(es). Use a period, a comma, or a colon in a list")
-    if (bold > 3)    msgs = add(msgs, "it has " bold " bold phrases and the cap is 3")
-    if (nbanned > 0) msgs = add(msgs, "it uses banned status words: " blist)
-    if (scorecard)   msgs = add(msgs, "it prints a test or typecheck count, which is a scorecard")
-    if (opener)      msgs = add(msgs, "it opens by agreeing with the reader instead of stating the fact")
+    if (words > 120) msgs = add(msgs, "it ran " words " words, past the caps, unless the reader had asked you to explain, compare or summarise")
+    if (emdash > 0)  msgs = add(msgs, "it used " emdash " em dash(es)")
+    if (bold > 3)    msgs = add(msgs, "it used " bold " bold phrases against a cap of 3")
+    if (nbanned > 0) msgs = add(msgs, "it used banned status words: " blist)
+    if (scorecard)   msgs = add(msgs, "it printed stacked test or typecheck counts, which is a scorecard")
+    if (opener)      msgs = add(msgs, "it opened by agreeing with the reader instead of stating the fact")
 
-    if (STATE != "") print words >> STATE
+    # Two columns separated by a tab: the word count, then the verdict, empty
+    # when the reply broke nothing. remind.sh reads both on the next prompt.
+    if (STATE != "") print words "\t" msgs >> STATE
 
     if (msgs == "") {
       if (LOG != "") print words "	clean" >> LOG
-      print "{}"; exit
+    } else {
+      if (LOG != "") print words "	" msgs >> LOG
     }
-    if (LOG != "") print words "	" msgs >> LOG
 
-    out = "Brevity check on the reply you just wrote: " msgs ". Rewrite it shorter, keeping every fact: the location, the cause, the numbers the reader needs, and any open question. Give the rewrite only, with no apology and no explanation of the edit."
-
-    gsub(/\\/, "\\\\", out)
-    gsub(/"/, "\\\"", out)
-    print "{\"hookSpecificOutput\":{\"hookEventName\":\"Stop\",\"additionalContext\":\"" out "\"}}"
+    # Always empty. Anything this hook asks for arrives after the reader has
+    # read the reply, so it can only add a second one.
+    print "{}"
   }
 
   function add(acc, s) { return acc (acc == "" ? "" : "; ") s }

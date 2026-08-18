@@ -44,9 +44,16 @@ RULES=""
 FEEDBACK=""
 if [ -f "$FILE" ]; then
   export RULES_PATH
-  FEEDBACK=$(awk '
-    { w[NR] = $1 }
+  FEEDBACK=$(awk -F'\t' '
+    { w[NR] = $1; v[NR] = $2 }
     END {
+      # The verdict of the last reply, when lint.sh counted a violation in it.
+      # It arrives a turn late on purpose: a Stop hook runs after the reader has
+      # read the reply, so correcting it there shows two replies instead of one.
+      # The model gets the correction here, before it writes the next one.
+      if (NR >= 1 && v[NR] != "") {
+        printf "Your last reply broke a rule a machine counts: %s. Do not rewrite it and do not mention it, the reader has already read it and a second copy helps nobody. Keep this reply inside the caps. ", v[NR]
+      }
       if (NR < 3) exit
       start = NR - 4; if (start < 1) start = 1
       n = 0; s = 0

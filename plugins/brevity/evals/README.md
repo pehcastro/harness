@@ -105,7 +105,29 @@ in two ways. It tells the model the average length of its own recent replies
 instead of restating the rule, and its linter threshold is 120 words rather than
 250. At 250 nothing ever reached the check; at 120 it fired eleven times.
 
-Cost is flat across all three, so the difference is not bought with tokens.
+### The word counts above are wrong, and how
+
+`--output-format json` returns the final message of a turn. When the linter
+returned its verdict from the `Stop` hook, the model wrote a second reply, so
+the harness measured the rewrite and never saw the original, which stayed on the
+reader's screen along with the hook's complaint.
+
+Corrected for what a reader actually sees:
+
+| | rules only | static reminder | reminder + linter |
+|---|---|---|---|
+| measured | 14364 | 10957 | 8752 |
+| actually on screen | 14364 | 10957 | **12008** |
+
+So the third arm was the worst of the two hooked arms, not the best. A session
+log confirmed the mechanism: on 18 firings the reader read 9385 words where 3916
+were written, a 139% increase, while the rewrites came out 5% shorter than the
+originals.
+
+The linter now writes its verdict to the state file and returns an empty object,
+so the reminder delivers it before the next reply instead of after the last one.
+`analyze.py` still measures only the final message; with no rewrites there is
+nothing left for it to miss.
 
 ## Limits
 

@@ -81,41 +81,66 @@ written. It counts, rather than judges:
 | Em dashes | any |
 | Bold phrases | more than 3 |
 | Banned status words | any, outside code |
-| Stacked metrics | two or more, such as a test count next to a typecheck count |
+| Stacked metrics | two or more, such as a test count beside a typecheck count |
 | Opening by agreeing | first sentence |
 
-When something trips, it returns feedback that Claude must act on, and the reply
-gets rewritten. When nothing trips it returns an empty object and adds nothing to
-the context, so a compliant turn costs nothing at all.
+It does not ask for a rewrite, and cannot. Assistant text streams to the
+terminal as it is produced, so by the time a `Stop` hook runs you have already
+read the reply. `MessageDisplay` is the only event that sees assistant text and
+the documentation calls it display-only. Nothing can suppress or replace a reply
+once it exists.
+
+An earlier version returned the verdict from the hook, and the result was two
+replies on screen: the long one, the hook's complaint, then a slightly shorter
+one. Measured on a real session, that made those turns 139% longer to read while
+the rewrite came out only 5% shorter. Worse than leaving the first alone.
+
+So the verdict goes into the shared state file instead, and the reminder
+delivers it with your next prompt:
+
+```
+Your last reply broke a rule a machine counts: it ran 139 words, past
+the caps; it used banned status words: landed. Do not rewrite it and do
+not mention it, the reader has already read it.
+```
+
+The correction arrives one turn late, before the next reply is written rather
+than after the last one was read. The hook itself always returns an empty object
+and adds nothing to the context.
 
 > [!NOTE]
-> Code inside fences is exempt from every check. A snippet containing `landed` or
-> a test count will not be flagged.
+> Code inside fences is exempt from every check. A snippet containing `landed`
+> or a test count is not flagged.
 
 Two thresholds are deliberately loose:
 
 - **120 words, not the 40 to 80 the rules ask for.** The script cannot see your
-  question, so it cannot know whether you asked for depth. The message says to
-  keep the length if you did, so a wrong flag costs a sentence rather than the
-  answer.
+  question, so it cannot know whether you asked for depth. The verdict says so.
 - **Two stacked metrics, not one number.** `5 tests pass` is correct output. A
   scorecard is several metrics piled together.
 
-A linter that is wrong teaches the model to ignore it, so only checks that can be
-right belong in it.
+A linter that is wrong teaches the model to ignore it, so only checks that can
+be right belong in it.
 
 ## What it costs
 
 Measured over 140 turns, against the same rules with no hooks:
 
-| | rules only | with hooks |
-|---|---|---|
-| total words | 14364 | 8752 |
-| replies over 120 words | 44 | 3 |
-| growth across the session | 1.28x | 0.96x |
-| cost | $361 | $359 |
+| | rules only | static reminder | reminder + linter |
+|---|---|---|---|
+| words the reader sees | 14364 | 10957 | 12008 |
+| growth across the session | 1.28x | 1.21x | 0.96x |
 
-The linter fired on 11 turns of 140. On the other 129 it cost nothing.
+Read those two rows together. The third arm produced the flattest session and
+still put more words on screen, because that build returned the verdict from the
+`Stop` hook and every flagged turn showed a second reply. The linter fired 11
+times and cost about 3250 words to do it.
+
+The linter no longer does that, so neither number describes the current build.
+What carries over is the finding underneath: the reminder is worth its tokens,
+and a rewrite after the fact is not.
+
+The hook now returns an empty object on every turn, so it costs nothing at all.
 
 ## Turning them off
 
