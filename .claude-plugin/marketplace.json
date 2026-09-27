@@ -27,6 +27,36 @@
         "ste",
         "tokens"
       ]
+    },
+    {
+      "name": "nkz-taste",
+      "displayName": "Taste",
+      "source": "./",
+      "description": "Design and build product UI with taste, for native mobile (Expo / React Native) and web. Product decision first, then the craft floor, then the feel.",
+      "version": "0.1.0",
+      "author": {
+        "name": "pehcastro",
+        "url": "https://github.com/pehcastro"
+      },
+      "homepage": "https://github.com/pehcastro/harness/tree/main/skills/nkz-taste",
+      "repository": "https://github.com/pehcastro/harness",
+      "license": "MIT",
+      "category": "skills",
+      "keywords": [
+        "skill",
+        "design",
+        "ui",
+        "ux",
+        "react-native",
+        "expo",
+        "web",
+        "accessibility",
+        "animation"
+      ],
+      "strict": false,
+      "skills": [
+        "./skills/nkz-taste"
+      ]
     }
   ]
 }

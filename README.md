@@ -28,6 +28,23 @@ fewer output tokens, 31% lower cost. The rules also ship for Cursor, Windsurf,
 Cline, Copilot, and anything that reads `AGENTS.md`. See
 [plugins/brevity](plugins/brevity) for the numbers and the method.
 
+### [nkz-taste](skills/nkz-taste)
+
+A skill for designing and building product UI, on native mobile (Expo / React
+Native) and web. Product decision first, then the craft floor, then the feel.
+
+```
+/plugin install nkz-taste@pehcastro
+```
+
+Then type `/nkz-taste`, or let Claude load it. For other agents:
+
+```
+npx skills add pehcastro/harness --skill nkz-taste
+```
+
+[Docs](https://harness.nkz.md/docs/nkz-taste/overview)
+
 ## Staying current
 
 Auto-update is off for this marketplace until you turn it on. Claude Code

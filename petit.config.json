@@ -20,6 +20,10 @@
       "path": "./docs/brevity"
     },
     {
+      "label": "Taste",
+      "path": "./docs/nkz-taste"
+    },
+    {
       "label": "Marketplace",
       "path": "./docs/marketplace"
     }
